@@ -1,11 +1,11 @@
-Ember CLI
----------
+Ember Tools
+-----------
 
 ![demo](http://i.imgur.com/bRJobg5.gif)
 
 ## Installation
 
-`npm install ember-cli`
+`npm install ember-tools`
 
 ## What's in the bag?
 

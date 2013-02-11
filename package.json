@@ -1,5 +1,5 @@
 {
-  "name": "ember-cli",
+  "name": "ember-tools",
   "version": "0.0.1",
   "bin": {
     "ember": "./bin/ember",

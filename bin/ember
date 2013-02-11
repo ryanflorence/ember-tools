@@ -7,7 +7,7 @@ program.version('0.0.1').parse(process.argv);
 
 if (program.args[0]) {
   var command = commands[program.args[0]];
-  message.error("'" + program.args[0] + "' is not an ember-cli command.", command);
+  message.error("'" + program.args[0] + "' is not an ember-tools command.", command);
   command(program);
 }
 
