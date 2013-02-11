@@ -1,0 +1,23 @@
+#!/usr/bin/env node
+var program = require('commander');
+var generators = require('../src/generators');
+var message = require('../src/util/message');
+
+program.version('0.0.1').
+  option('-m, --model', 'generate model').
+  option('-v, --view', 'generate view').
+  option('-t, --template', 'generate template').
+  option('-c, --controller', 'generate controller').
+  option('-r, --route', 'generate route').
+  parse(process.argv);
+
+if (!program.args[0]) {
+  message.notify('please provide a resource name');
+} else {
+  for (var generator in generators) {
+    if (program[generator]) {
+      generators[generator](program.args[0], program);
+    }
+  }
+}
+

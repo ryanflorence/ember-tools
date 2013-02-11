@@ -1,0 +1,13 @@
+#!/usr/bin/env node
+var program = require('commander');
+var commands = require('../src/commands');
+var message = require('../src/util/message');
+
+program.version('0.0.1').parse(process.argv);
+
+if (program.args[0]) {
+  var command = commands[program.args[0]];
+  message.error("'" + program.args[0] + "' is not an ember-cli command.", command);
+  command(program);
+}
+

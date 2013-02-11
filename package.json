@@ -1,0 +1,27 @@
+{
+  "name": "ember-cli",
+  "version": "0.0.1",
+  "bin": {
+    "ember": "./bin/ember",
+    "ember-generate": "./bin/ember-generate",
+    "ember-precompile": "./bin/ember-precompile"
+  },
+  "dependencies": {
+    "commander": "*",
+    "cli-color": "*",
+    "requirejs": "*",
+    "walk": "*",
+    "handlebars": "*",
+    "jsdom": "*",
+    "fleck": "*",
+    "rsvp-that-works": "*",
+    "browserbuild": "*",
+    "fs-extra": "*"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "should": "*",
+    "rimraf": "*"
+  }
+}
+

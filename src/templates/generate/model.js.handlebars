@@ -1,0 +1,8 @@
+var {{objectName}} = DS.Model.extend({
+{{#each fields}}
+  {{name}}: DS.attr('{{type}}'){{comma}}
+{{/each}}
+});
+
+module.exports = {{objectName}};
+
