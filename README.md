@@ -3,9 +3,13 @@ Ember Tools
 
 ![demo](http://i.imgur.com/LNfnYRO.gif)
 
+## Current Version: 0.0.2
+
+The cli is still rough around the edges. Next thing on my todo list is making the cli polished.
+
 ## Installation
 
-`npm install ember-tools`
+`npm install -g ember-tools`
 
 ## What's in the bag?
 
@@ -20,10 +24,11 @@ Ember Tools
 
 ### Commands
 
-- `ember create [appDir]`
-- `ember build`
-- `ember-generate [options] [resource]`
-- `ember-precompile --directory [directory] --file [file]`
+- [`ember create [appDir]`](#ember-create-dir)
+- [`ember build`](#ember-build)
+- [`ember-generate --scaffold [resource]`](#ember-generate---scaffold-resource)
+- [`ember-generate [options] [resource]`](#ember-generate-options-resource)
+- [`ember-precompile --directory [directory] --file [file]`](#ember-generate---scaffold-resource)
 
 ### Current Library Versions
 
@@ -106,6 +111,9 @@ _Examples_
 
 ## Roadmap
 
+- clean up cli
+  - consolidate all commands into `ember`
+  - make help and usage information accurate and valuable 
 - create CONTRIBUTING file
 - moar tests
 - travis-ci
@@ -113,13 +121,11 @@ _Examples_
 - baked in testing
 - generated tests
 - support for custom application namespace (instead of just `App`)
-- consolidate all bin script usage into `ember` (get rid of ember-generate, etc.)
 - emblem.js templates
 - coffeescript generators
 - AMD generators/build (maybe)
 - coffeescript + AMD generators! (maybe-er)
 - ES6 module generators/build EVEN THOUGH E'RBODY UP IN THEIR GRILL (maybeist)
-- refactor some of the ugly parts of the code
 
 ## License and Copyright
 
