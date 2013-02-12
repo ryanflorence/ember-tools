@@ -1,7 +1,7 @@
 Ember Tools
 -----------
 
-![demo](http://i.imgur.com/bRJobg5.gif)
+![demo](http://i.imgur.com/LNfnYRO.gif)
 
 ## Installation
 
@@ -12,6 +12,7 @@ Ember Tools
 ### Features
 
 - prescribed file organization for sanity
+- scaffolding for learning curve mitigation
 - template precompilation for performance
 - single file application build for convenience
 - generators for faster application development
@@ -58,12 +59,25 @@ _Example:_
 ember build
 ```
 
-## `ember generate [options] [resource]`
+## `ember-generate --scaffold [resource]`
 
-Generates boilerplate application modules.
+Creates fully functional CRUD.
+
+_Example:_
+
+`ember-generate --scaffold person name:string age:number`
+
+Visiting `/#people` will now present the user with a fully functional interface to create, edit, and destroy people models.
+
+**NOTE:** It is important to give it the singular version of word.
+
+## `ember-generate [options] [resource]`
+
+Generates boilerplate application modules. See also `ember-generate --scaffold`.
 
 Examples:
 
+`ember-generate -m recipe`
 
 | options | object name | file |
 | --------|-------------|------|
@@ -80,7 +94,7 @@ _Notes:_
 - Sub-directories will be created for you if they don't exist.
 - Files will be overwritten **without warning**.
 
-## `ember precompile --directory [dir] --file [file]`
+## `ember-precompile --directory [dir] --file [file]`
 
 Precompiles templates found in `dir` into `file`.
 
@@ -96,7 +110,6 @@ _Examples_
 - moar tests
 - travis-ci
 - warn before overwriting a file
-- scaffolding (functional CRUD in one command)
 - baked in testing
 - generated tests
 - support for custom application namespace (instead of just `App`)

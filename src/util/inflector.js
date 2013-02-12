@@ -19,3 +19,7 @@ exports.objectify /*lol*/ = function (str) {
   return exports.classify(str);
 };
 
+exports.humanize = function(str) {
+  return fleck.capitalize(fleck.underscore(str).replace(/_/g, ' '));
+};
+

@@ -4,6 +4,7 @@ var generators = require('../src/generators');
 var message = require('../src/util/message');
 
 program.version('0.0.1').
+  option('-s, --scaffold', 'generate scaffold').
   option('-m, --model', 'generate model').
   option('-v, --view', 'generate view').
   option('-t, --template', 'generate template').

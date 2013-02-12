@@ -11,19 +11,18 @@ var read = exports.read = function(name) {
   return fs.readFileSync(path).toString();
 };
 
-var write = exports.write = function(name, savePath, locals, force) {
+var write = exports.write = function(srcPath, savePath, locals, force) {
   return fsp.exists(savePath).then(function(exists) {
     if (!force && exists) {
       message.fileExists(savePath);
       return exists;
     }
-    return writeFile(name, savePath, locals);
+    return writeFile(srcPath, savePath, locals);
   });
 };
 
-function writeFile(name, savePath, locals) {
-  var template = read(name);
-  var src = compile(template, locals);
+function writeFile(srcPath, savePath, locals) {
+  var src = compile(srcPath, locals);
   return fsp.createFile(savePath).then(function() {
     return fsp.writeFile(savePath, src).then(function() {
       message.fileCreated(savePath);
@@ -39,7 +38,9 @@ var generate = exports.generate = function(type, resourceName, locals) {
   return write(name, path, locals, true);
 };
 
-function compile(template, locals) {
-  return handlebars.compile(template)(locals);
-}
+var compile = exports.compile = function(srcPath, locals) {
+  var template = read(srcPath);
+  var compiled = handlebars.compile(template);
+  return compiled(locals);
+};
 

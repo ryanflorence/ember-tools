@@ -1,6 +1,6 @@
 {
   "name": "ember-tools",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "bin": {
     "ember": "./bin/ember",
     "ember-generate": "./bin/ember-generate",
@@ -9,7 +9,6 @@
   "dependencies": {
     "commander": "*",
     "cli-color": "*",
-    "requirejs": "*",
     "walk": "*",
     "handlebars": "*",
     "jsdom": "*",
