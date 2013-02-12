@@ -118,4 +118,10 @@ Copyright &copy; 2013 [Ryan Florence](http://ryanflorence.com)
 
 Run tests with
 
-`mocha test`
+`npm test`
+
+Run tests and watch for changes with
+
+```bash
+npm run-script watch-tests
+```
