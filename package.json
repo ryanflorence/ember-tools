@@ -7,15 +7,15 @@
     "ember-precompile": "./bin/ember-precompile"
   },
   "dependencies": {
-    "commander": "*",
-    "cli-color": "*",
-    "walk": "*",
-    "handlebars": "*",
-    "jsdom": "*",
-    "fleck": "*",
+    "commander": "1.1.1",
+    "cli-color": "0.2.1",
+    "walk": "2.2.1",
+    "handlebars": "1.0.8",
+    "jsdom": "0.3.4",
+    "fleck": "0.5.1",
     "rsvp-that-works": "*",
-    "browserbuild": "*",
-    "fs-extra": "*"
+    "browserbuild": "0.6.0",
+    "fs-extra": "0.5.0"
   },
   "devDependencies": {
     "mocha": "*",
