@@ -23,12 +23,14 @@ function createIndex() {
     var dirPath = rootify(dirName);
     var walker = walk(dirPath);
     walker.on('file', function(dir, stats, next) {
-      var path = unroot(dir + '/' + stats.name).replace(/\.js$/, '');
-      var name = inflector.objectify(path.replace(dirName, ''));
-      modules.push({
-        objectName: name,
-        path: path
-      });
+      if (stats.name.charAt(0) !== '.') {
+        var path = unroot(dir + '/' + stats.name).replace(/\.js$/, '');
+        var name = inflector.objectify(path.replace(dirName, ''));
+        modules.push({
+          objectName: name,
+          path: path
+        });
+      }
       next();
     });
   });

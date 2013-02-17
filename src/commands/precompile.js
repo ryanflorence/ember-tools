@@ -41,12 +41,14 @@ function getTemplates(source, callback) {
   var walker = walk(source);
 
   walker.on('file', function(dir, stats, next) {
-    var path = dir + '/' + stats.name;
-    var name = path.replace(/\.handlebars$/, '').replace(source + '/', '');
-    templates.push({
-      name: name,
-      content: fs.readFileSync(path).toString()
-    });
+    if (stats.name.charAt(0) !== '.') {
+      var path = dir + '/' + stats.name;
+      var name = path.replace(/\.handlebars$/, '').replace(source + '/', '');
+      templates.push({
+        name: name,
+        content: fs.readFileSync(path).toString()
+      });
+    }
     next();
   });
 
