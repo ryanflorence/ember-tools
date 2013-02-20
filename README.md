@@ -32,10 +32,10 @@ The cli is still rough around the edges. Next thing on my todo list is making th
 
 ### Current Library Versions
 
-- ember 1.0.0.pre4
+- ember 1.0.0-RC.1
 - ember-data rev 11
-- handlebars 1.0.rc.2
-- jQuery 1.9.0
+- handlebars 1.0.0-rc.3
+- jQuery 1.9.1
 
 ## `ember create [dir]`
 
