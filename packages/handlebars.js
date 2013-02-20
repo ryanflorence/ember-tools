@@ -25,11 +25,17 @@ THE SOFTWARE.
 // lib/handlebars/base.js
 
 /*jshint eqnull:true*/
-window.Handlebars = {};
+this.Handlebars = {};
 
 (function(Handlebars) {
 
-Handlebars.VERSION = "1.0.rc.2";
+Handlebars.VERSION = "1.0.0-rc.3";
+Handlebars.COMPILER_REVISION = 2;
+
+Handlebars.REVISION_CHANGES = {
+  1: '<= 1.0.rc.2', // 1.0.rc.2 is actually rev2 but doesn't report it
+  2: '>= 1.0.0-rc.3'
+};
 
 Handlebars.helpers  = {};
 Handlebars.partials = {};
@@ -164,7 +170,7 @@ Handlebars.registerHelper('log', function(context, options) {
   Handlebars.log(level, context);
 });
 
-}(window.Handlebars));
+}(this.Handlebars));
 ;
 // lib/handlebars/compiler/parser.js
 /* Jison generated parser */
@@ -642,9 +648,13 @@ return new Parser;
 // lib/handlebars/compiler/base.js
 Handlebars.Parser = handlebars;
 
-Handlebars.parse = function(string) {
+Handlebars.parse = function(input) {
+
+  // Just return if an already-compile AST was passed in.
+  if(input.constructor === Handlebars.AST.ProgramNode) { return input; }
+
   Handlebars.Parser.yy = Handlebars.AST;
-  return Handlebars.Parser.parse(string);
+  return Handlebars.Parser.parse(input);
 };
 
 Handlebars.print = function(ast) {
@@ -1381,7 +1391,9 @@ Handlebars.JavaScriptCompiler = function() {};
       var source = this.mergeSource();
 
       if (!this.isChild) {
-        source = "this.compiledVersion = '"+Handlebars.VERSION+"';\n"+source;
+        var revision = Handlebars.COMPILER_REVISION,
+            versions = Handlebars.REVISION_CHANGES[revision];
+        source = "this.compilerInfo = ["+revision+",'"+versions+"'];\n"+source;
       }
 
       if (asObject) {
@@ -2063,23 +2075,23 @@ Handlebars.JavaScriptCompiler = function() {};
 
 })(Handlebars.Compiler, Handlebars.JavaScriptCompiler);
 
-Handlebars.precompile = function(string, options) {
-  if (typeof string !== 'string') {
-    throw new Handlebars.Exception("You must pass a string to Handlebars.compile. You passed " + string);
+Handlebars.precompile = function(input, options) {
+  if (!input || (typeof input !== 'string' && input.constructor !== Handlebars.AST.ProgramNode)) {
+    throw new Handlebars.Exception("You must pass a string or Handlebars AST to Handlebars.compile. You passed " + input);
   }
 
   options = options || {};
   if (!('data' in options)) {
     options.data = true;
   }
-  var ast = Handlebars.parse(string);
+  var ast = Handlebars.parse(input);
   var environment = new Handlebars.Compiler().compile(ast, options);
   return new Handlebars.JavaScriptCompiler().compile(environment, options);
 };
 
-Handlebars.compile = function(string, options) {
-  if (typeof string !== 'string') {
-    throw new Handlebars.Exception("You must pass a string to Handlebars.compile. You passed " + string);
+Handlebars.compile = function(input, options) {
+  if (!input || (typeof input !== 'string' && input.constructor !== Handlebars.AST.ProgramNode)) {
+    throw new Handlebars.Exception("You must pass a string or Handlebars AST to Handlebars.compile. You passed " + input);
   }
 
   options = options || {};
@@ -2088,7 +2100,7 @@ Handlebars.compile = function(string, options) {
   }
   var compiled;
   function compile() {
-    var ast = Handlebars.parse(string);
+    var ast = Handlebars.parse(input);
     var environment = new Handlebars.Compiler().compile(ast, options);
     var templateSpec = new Handlebars.JavaScriptCompiler().compile(environment, options, undefined, true);
     return Handlebars.template(templateSpec);
@@ -2124,15 +2136,30 @@ Handlebars.VM = {
       },
       programWithDepth: Handlebars.VM.programWithDepth,
       noop: Handlebars.VM.noop,
-      compiledVersion: null
+      compilerInfo: null
     };
 
     return function(context, options) {
       options = options || {};
       var result = templateSpec.call(container, Handlebars, context, options.helpers, options.partials, options.data);
-      if (container.compiledVersion !== Handlebars.VERSION) {
-        throw "Template was compiled with "+(container.compiledVersion || 'unknown version')+", but runtime is "+Handlebars.VERSION;
+
+      var compilerInfo = container.compilerInfo || [],
+          compilerRevision = compilerInfo[0] || 1,
+          currentRevision = Handlebars.COMPILER_REVISION;
+
+      if (compilerRevision !== currentRevision) {
+        if (compilerRevision < currentRevision) {
+          var runtimeVersions = Handlebars.REVISION_CHANGES[currentRevision],
+              compilerVersions = Handlebars.REVISION_CHANGES[compilerRevision];
+          throw "Template was precompiled with an older version of Handlebars than the current runtime. "+
+                "Please update your precompiler to a newer version ("+runtimeVersions+") or downgrade your runtime to an older version ("+compilerVersions+").";
+        } else {
+          // Use the embedded version info since the runtime doesn't know about this revision yet
+          throw "Template was precompiled with a newer version of Handlebars than the current runtime. "+
+                "Please update your runtime to a newer version ("+compilerInfo[1]+").";
+        }
       }
+
       return result;
     };
   },
