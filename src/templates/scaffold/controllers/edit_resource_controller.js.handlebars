@@ -1,9 +1,7 @@
-var store = require('../store');
-
 var {{objectName}} = Ember.ObjectController.extend({
 
   save: function() {
-    store.commit();
+    this.get('store').commit();
     this.redirectToModel();
   },
 

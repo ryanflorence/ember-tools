@@ -9,7 +9,7 @@ require('./templates');
 
 var App = window.App = require('./app');
 
-App.store = require('./store');
+App.Store = require('./store');
 
 App.CowsNewController = require('./controllers/cows/new_controller');
 App.CowsNewRoute = require('./routes/cows/new_route');

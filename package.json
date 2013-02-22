@@ -1,6 +1,6 @@
 {
   "name": "ember-tools",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "bin": {
     "ember": "./bin/ember",
     "ember-generate": "./bin/ember-generate",
