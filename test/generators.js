@@ -7,6 +7,20 @@ var fs = require("fs");
 var rm = require("rimraf");
 var helpers = require("./support/helpers");
 
+function createTestApp(done) {
+  exec("./bin/ember create test-app", function() {
+    fs.exists('.ember', function(exists) {
+      exists.should.equal(true);
+      done();
+    });
+  });  
+}
+function removeTestApp(done) {
+  rm("./test-app", function() {
+    fs.unlink('.ember', done);
+  });
+}
+
 function call(opts, done) {
   exec("./bin/ember-generate " + opts, function(err) {
     if (err) throw new Error(err);
@@ -15,20 +29,10 @@ function call(opts, done) {
 }
 
 describe("model", function() {
-  beforeEach(function (done) {
-    exec("./bin/ember create test-app", function() {
-      fs.exists('.ember', function(exists) {
-        exists.should.equal(true);
-        done();
-      });
-    });
-  });
+  
+  beforeEach(createTestApp);
 
-  afterEach(function(done) {
-    rm("./test-app", function() {
-      fs.unlink('.ember', done);
-    });
-  });
+  afterEach(removeTestApp);
 
   it("should generate models", function(done) {
     call("-m list", function() {
@@ -53,5 +57,18 @@ describe("route", function() {
 
 describe("template", function() {
   it("should save to sub directory");
+});
+
+describe("mixin", function() {
+
+  beforeEach(createTestApp);
+
+  afterEach(removeTestApp);
+
+  it("should generate a file named 'tacoable' in folder 'mixins'", function(done) {
+    call("-x tacoable", function() {
+      helpers.assertPathsExist(["test-app/mixins/tacoable.js"], done);
+    });
+  });
 });
 

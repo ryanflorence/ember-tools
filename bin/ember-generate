@@ -10,6 +10,7 @@ program.version('0.0.1').
   option('-t, --template', 'generate template').
   option('-c, --controller', 'generate controller').
   option('-r, --route', 'generate route').
+  option('-x, --mixin', 'generate mixin').
   parse(process.argv);
 
 if (!program.args[0]) {
