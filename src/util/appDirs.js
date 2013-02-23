@@ -3,6 +3,7 @@ module.exports = [
   'models',
   'routes',
   'templates',
-  'views'
+  'views',
+  'mixins'
 ];
 
