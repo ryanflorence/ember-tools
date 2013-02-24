@@ -13,9 +13,28 @@ function create(done) {
   });
 }
 
+function createAnother(done) {
+  exec("./bin/ember create another-test-app", function(err) {
+    if (err) throw new Error(err);
+    fs.writeFile('.ember', '{\n  "test-app": {\n    "modules": "cjs",\n    "appDir": "test-app"\n  },\n  "another-test-app": {\n    "modules": "cjs",\n    "appDir": "another-test-app"\n  }\n}', function(err) {
+      if (err) throw new Error(err);
+      done();
+    });
+  });
+}
+
 function cleanup(done) {
   rm("./test-app", function() {
     fs.unlink('.ember', done);
+  });
+}
+
+function cleanupAnother(done) {
+  rm("./another-test-app", function() {
+    fs.writeFile('.ember', '{\n  "modules": "cjs",\n   "appDir": "test-app"\n}', function(err) {
+      if (err) throw new Error(err)
+      done();
+    });
   });
 }
 
@@ -75,5 +94,22 @@ describe("build", function() {
     });
   });
 
+  describe("targets specific project by key in .ember config file", function() {
+
+    before(createAnother);
+
+    after(cleanupAnother);
+
+    it("should build the correct app", function(done) {
+      exec("./bin/ember build another-test-app", function(err) {
+        if (err) throw new Error(err);
+        fs.exists("./another-test-app/application.js", function(exists) {
+          exists.should.equal(true);
+          done();
+        });
+      });
+    });
+
+  });
 });
 

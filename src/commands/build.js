@@ -10,7 +10,7 @@ var precompile = require('./precompile');
 var root;
 
 module.exports = function(program) {
-  root = require('../util/config')().appDir;
+  root = require('../util/config')(program).appDir;
   precompile(rootify('templates'), rootify('templates.js'), function() {
     createIndex().then(build);
   });
