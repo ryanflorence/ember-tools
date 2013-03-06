@@ -2,9 +2,7 @@
   "name": "ember-tools",
   "version": "0.0.5",
   "bin": {
-    "ember": "./bin/ember",
-    "ember-generate": "./bin/ember-generate",
-    "ember-precompile": "./bin/ember-precompile"
+    "ember": "./bin/ember"
   },
   "dependencies": {
     "commander": "1.1.1",
@@ -23,8 +21,7 @@
     "rimraf": "*"
   },
   "scripts": {
-    "test": "node_modules/.bin/mocha --require should --reporter dot --ui bdd --growl test",
-    "watch-test": "node_modules/.bin/mocha --require should --reporter dot --ui bdd --growl test --watch ./src"
+    "test": "node_modules/.bin/mocha --require should --reporter dot --ui bdd --growl $(find test -name \"*.spec.js\")"
   },
   "engines": { "node" : ">=0.8.16" }
 }

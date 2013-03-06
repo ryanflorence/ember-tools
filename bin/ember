@@ -1,13 +1,54 @@
 #!/usr/bin/env node
 var program = require('commander');
-var commands = require('../src/commands');
-var message = require('../src/util/message');
+var create = require('../src/commands/create');
+var build = require('../src/commands/build');
+var generate = require('../src/commands/generate');
+//var message = require('../src/util/message');
 
-program.version('0.0.5').parse(process.argv);
+program
+  .version('v0.0.5')
+  .usage("[command] [options]\n\n  Command-Specific Help\n\n    ember [command] --help");
 
-if (program.args[0]) {
-  var command = commands[program.args[0]];
-  message.error("'" + program.args[0] + "' is not an ember-tools command.", command);
-  command(program);
-}
+program
+  .command('create')
+  .description('creates a new ember application')
+  .usage('[dir]')
+  .action(function() { create(program); });
+
+program
+  .command('build')
+  .description('compiles templates and builds the app')
+  .usage(' ')
+  .action(function() { build(program); })
+
+program
+  .command('generate')
+  .description('generates application files')
+  .usage("[options] [name]\n\n    [name]    the under_score name of your object\n    [fields]  field:type pairs, ex: 'name:string age:number broke:boolean'\n    [options] can be combined")
+  .action(function() {
+    generate.apply(null, arguments);
+  })
+  .option('-c, --controller [name]',        'generates a controller')
+  .option('-x, --mixin [name]',             'generates a mixin')
+  .option('-m, --model [name] [fields]',    'generates a model with optional [fields]')
+  .option('-r, --route [name]',             'generates a route')
+  .option('-s, --scaffold [name] [fields]', 'scaffolds full CRUD for a model')
+  .option('-t, --template [name]',          'generates a handlebars template')
+  .option('-v, --view [name]',              'generates a view');
+
+program
+  .command('precompile')
+  .description('precompile templates from src dir to target dir')
+  .action(function() { precompile(program); })
+  .option('-d, --directory [directory]', 'source template directory')
+  .option('-f, --file [file]', 'output file');
+
+
+program.parse(process.argv);
+
+//if (program.args[0]) {
+  //var command = commands[program.args[0]];
+  //message.error("'" + program.args[0] + "' is not an ember-tools command.", command);
+  //command(program);
+//}
 

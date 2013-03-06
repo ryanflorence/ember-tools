@@ -7,15 +7,14 @@ var message = require('../util/message');
 var config, root;
 var inf = inflector;
 
-module.exports = function(resource, program) {
+module.exports = function(resource, env) {
   config = require('../util/config')();
   root = config.appDir;
-  var fields = parseFields(program.args.slice(1));
   return rsvp.all(
-    createModel(resource, fields),
+    createModel(resource, env.fields),
     createControllers(resource),
     createRoutes(resource),
-    createTemplates(resource, fields),
+    createTemplates(resource, env.fields),
     addRoutes(resource)
   );
 };

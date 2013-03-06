@@ -16,7 +16,7 @@ var files = [
 ];
 
 module.exports = function(program) {
-  root = program.args[1] || root;
+  root = program.args[0] || root;
   message.notify("-> Creating application files and directories");
   return makeEmberFile().
     then(makeRootDirectory).

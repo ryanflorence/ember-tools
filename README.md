@@ -1,19 +1,14 @@
 Ember Tools
 -----------
 
-![demo](http://i.imgur.com/LNfnYRO.gif)
+[demo](http://i.imgur.com/LNfnYRO.gif)
 
-## Current Version: 0.0.5
-
-The cli is still rough around the edges. Next thing on my todo list is making the cli polished.
 
 ## Installation
 
 `npm install -g ember-tools`
 
-## What's in the bag?
-
-### Features
+## Features
 
 - prescribed file organization for sanity
 - scaffolding for learning curve mitigation
@@ -22,67 +17,54 @@ The cli is still rough around the edges. Next thing on my todo list is making th
 - generators for faster application development
 - commonjs (node) style modules for js community <3 and isolated testing
 
-### Commands
+## Version Information
 
-- [`ember create [appDir]`](#ember-create-dir)
-- [`ember build`](#ember-build)
-- [`ember-generate --scaffold [resource]`](#ember-generate---scaffold-resource)
-- [`ember-generate [options] [resource]`](#ember-generate-options-resource)
-- [`ember-precompile --directory [directory] --file [file]`](#ember-generate---scaffold-resource)
+**Current Version: 0.0.5**
 
-### Current Library Versions
+Package versions:
 
 - ember 1.0.0-RC.1
 - ember-data rev 11
 - handlebars 1.0.0-rc.3
 - jQuery 1.9.1
 
-## `ember create [dir]`
+## Quickstart
 
-Creates the directory at [dir] and shoves a boilerplate ember app into
-it. Also creates an `.ember` file in the current directory so `ember
-build` knows what directory to build.
-
-**IMPORTANT**: Your app must be a sub-directory of the app you create it
-from. I anticipate more information to be stored in the `.ember` file
-like CoffeeScript and AMD support, etc.
-
-_Example:_
-
-```sh
-ember create client
 ```
-
-## `ember build`
-
-Builds your app, handing you a fresh-from-the-oven `application.js` with
-everything inside.
-
-_Example:_
-
-```sh
+npm install -g ember-tools
+mkdir my-app && cd my-app
+ember create js
+ember generate --scaffold person name:string age:number
 ember build
+open js/index.html
+# visit #/people
 ```
 
-## `ember-generate --scaffold [resource]`
+**IMPORTANT**: Your ember application is a sub-directory of a bigger project directory. There is an `.ember` file that gets created in the directory from which `ember create` is called. Its used for other `ember` commands.
 
-Creates fully functional CRUD.
+## Usage
 
-_Example:_
+```
+  Usage: ember [command] [options]
 
-`ember-generate --scaffold person name:string age:number`
+  Command-Specific Help
 
-Visiting `/#people` will now present the user with a fully functional interface to create, edit, and destroy people models.
+    ember [command] --help
 
-**NOTE:** It is important to give it the singular version of word.
+  Commands:
 
-## `ember-generate [options] [resource]`
+    create                 creates a new ember application
+    build                  compiles templates and builds the app
+    generate [options]     generates application files
+    precompile [options]   precompile templates from src dir to target dir
 
-Generates boilerplate application modules. See also `ember-generate --scaffold`.
+  Options:
 
-Examples:
+    -h, --help     output usage information
+    -V, --version  output the version number
+```
 
-`ember-generate -m recipe`
+## Generator Examples
 
 | options | object name | file |
 | --------|-------------|------|
@@ -98,35 +80,20 @@ _Notes:_
 
 - Models will always be singular.
 - Sub-directories will be created for you if they don't exist.
-- Files will be overwritten **without warning**.
-
-## `ember-precompile --directory [dir] --file [file]`
-
-Precompiles templates found in `dir` into `file`.
-
-_Examples_
-
-`ember-precompile --directory app/templates --file app/templates.js`
-`ember-precompile -d app/templates -f app/templates.js`
+- Files will be overwritten **without warning** (for now, anyway).
 
 
 ## Roadmap
 
-- clean up cli
-  - consolidate all commands into `ember`
-  - make help and usage information accurate and valuable 
-- create CONTRIBUTING file
-- moar tests
+- some refactoring and unit tests (its pretty much a bunch of integration tests right now)
 - travis-ci
-- warn before overwriting a file
-- baked in testing
-- generated tests
+- baked in testing and generated tests
 - support for custom application namespace (instead of just `App`)
+- warn before overwriting a file
+- build application.js to optional path
 - emblem.js templates
-- coffeescript generators
-- AMD generators/build (maybe)
-- coffeescript + AMD generators! (maybe-er)
-- ES6 module generators/build EVEN THOUGH E'RBODY UP IN THEIR GRILL (maybeist)
+- AMD generators/build
+- ES6 module generators/build
 
 ## License and Copyright
 
@@ -136,12 +103,12 @@ Copyright &copy; 2013 [Ryan Florence](http://ryanflorence.com)
 
 ## Contributing
 
-Run tests with
+Run tests with:
 
 `npm test`
 
-Run tests and watch for changes with
+Or just use mocha:
 
-```bash
-npm run-script watch-test
-```
+`mocha test/build --watch`
+
+Its usually easiest to create a branch and send a pull request against that branch instead of master. Single commits are preferred (no big deal though, I can squash and cherry-pick).

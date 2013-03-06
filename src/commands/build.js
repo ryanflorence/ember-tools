@@ -6,7 +6,7 @@ var appDirs = require('../util/appDirs');
 var template = require('../util/template');
 var inflector = require('../util/inflector');
 var walk = require('walk').walkSync;
-var precompile = require('./precompile');
+var precompile = require('../util/precompile');
 var root;
 
 module.exports = function(program) {

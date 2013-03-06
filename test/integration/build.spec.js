@@ -1,7 +1,7 @@
 var exec = require("child_process").exec;
 var fs = require("fs");
 var rm = require("rimraf");
-var helpers = require("./support/helpers");
+var helpers = require("../support/helpers");
 
 function create(done) {
   exec("./bin/ember create test-app", function(err) {
@@ -28,8 +28,8 @@ function build(done) {
 
 function assertFilesMatch(a, b) {
   b = b || a;
-  var actual = fs.readFileSync(__dirname + '/../test-app/' + a).toString();
-  var expected = fs.readFileSync(__dirname + '/support/build/' + b).toString();
+  var actual = fs.readFileSync(__dirname + '/../../test-app/' + a).toString();
+  var expected = fs.readFileSync(__dirname + '/../support/build/' + b).toString();
   actual.should.equal(expected);
 }
 

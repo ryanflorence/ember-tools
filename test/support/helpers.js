@@ -25,7 +25,7 @@ exports.assertPathsExist = function(paths, done) {
 };
 
 exports.generate = function (opts, done) {
-  exec(__dirname + "/../../bin/ember-generate " + opts, function(err) {
+  exec(__dirname + "/../../bin/ember generate " + opts, function(err) {
     if (err) throw new Error(err);
     done();
   });

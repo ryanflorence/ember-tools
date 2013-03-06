@@ -5,7 +5,7 @@
 var exec = require("child_process").exec;
 var fs = require("fs");
 var rm = require("rimraf");
-var helpers = require("./support/helpers");
+var helpers = require("../support/helpers");
 
 function createTestApp(done) {
   exec("./bin/ember create test-app", function() {
@@ -22,14 +22,14 @@ function removeTestApp(done) {
 }
 
 function call(opts, done) {
-  exec("./bin/ember-generate " + opts, function(err) {
+  exec("./bin/ember generate " + opts, function(err) {
     if (err) throw new Error(err);
     done();
   });
 }
 
 describe("model", function() {
-  
+
   beforeEach(createTestApp);
 
   afterEach(removeTestApp);

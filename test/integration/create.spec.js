@@ -1,7 +1,7 @@
 var exec = require("child_process").exec;
 var fs = require("fs");
 var rm = require("rimraf");
-var helpers = require("./support/helpers");
+var helpers = require("../support/helpers");
 
 describe("create", function() {
 
