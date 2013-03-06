@@ -6,8 +6,7 @@ module.exports = function() {
     return JSON.parse(fs.readFileSync('.ember'));
   } else {
     message.notify("ember: could not find .ember file, please run `ember create [appDir]`");
-    process.exit();
-    return 'shutup jslint';
+    return process.exit();
   }
 };
 
