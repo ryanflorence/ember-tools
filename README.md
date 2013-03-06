@@ -3,7 +3,7 @@ Ember Tools
 
 ![demo](http://i.imgur.com/LNfnYRO.gif)
 
-## Current Version: 0.0.4
+## Current Version: 0.0.5
 
 The cli is still rough around the edges. Next thing on my todo list is making the cli polished.
 

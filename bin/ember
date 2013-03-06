@@ -3,7 +3,7 @@ var program = require('commander');
 var commands = require('../src/commands');
 var message = require('../src/util/message');
 
-program.version('0.0.1').parse(process.argv);
+program.version('0.0.5').parse(process.argv);
 
 if (program.args[0]) {
   var command = commands[program.args[0]];
