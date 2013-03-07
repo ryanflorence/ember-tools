@@ -1,8 +1,7 @@
 Ember Tools
 -----------
 
-[demo](http://i.imgur.com/LNfnYRO.gif)
-
+![demo](http://cl.ly/image/2G0x323u150m/ember.gif)
 
 ## Installation
 
@@ -19,7 +18,7 @@ Ember Tools
 
 ## Version Information
 
-**Current Version: 0.0.5**
+**Current Version: 0.1.0**
 
 Package versions:
 

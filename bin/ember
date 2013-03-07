@@ -6,7 +6,7 @@ var generate = require('../src/commands/generate');
 //var message = require('../src/util/message');
 
 program
-  .version('v0.0.5')
+  .version('0.1.0')
   .usage("[command] [options]\n\n  Command-Specific Help\n\n    ember [command] --help");
 
 program
