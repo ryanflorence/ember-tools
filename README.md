@@ -72,7 +72,7 @@ open js/index.html
 | `--controller, -c post/comments` | `PostCommentsController` | `controllers/post/comments.js` |
 | `--template, -t post/comments` | n/a | `templates/post/comments.handlebars` |
 | `--route, -r taco_cart` | `TacoCartRoute` | `routes/taco_cart.js` |
-| `--mixin, -m tacoable` | `Tacoable` | `mixins/tacoable.js` |
+| `--mixin, -x tacoable` | `Tacoable` | `mixins/tacoable.js` |
 | `-mvcrt tacos` | `Taco` <br>`TacosView` <br>`TacosController` <br>`TacosRoute` | `models/taco.js` <br>`views/tacos_view` <br>`controllers/tacos_controller.js` <br>`routes/taco_route.js` <br>`templates/tacos.handlebars`|
 
 _Notes:_
