@@ -6,12 +6,14 @@ require('./vendor/handlebars');
 require('./vendor/ember');
 require('./vendor/ember-data');
 require('./templates');
+{{#each helpers}}require('./{{path}}');
+{{/each}}
 
 var App = window.App = require('./app');
 
 App.Store = require('./store');
 {{#each modules}}
-App.{{objectName}} = require('./{{path}}');{{/each}}
+{{namespace}}{{objectName}} = require('./{{path}}');{{/each}}
 
 require('./routes');
 
