@@ -30,6 +30,7 @@ program
     generate.apply(null, arguments);
   })
   .option('-c, --controller [name]',        'generates a controller')
+  .option('-l, --helper [name]',            'generates a handlebars helper')
   .option('-x, --mixin [name]',             'generates a mixin')
   .option('-m, --model [name] [fields]',    'generates a model with optional [fields]')
   .option('-r, --route [name]',             'generates a route')

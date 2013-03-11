@@ -18,6 +18,7 @@ module.exports = function(program) {
 
 function createIndex() {
   var modules = [];
+  var helpers = [];
   appDirs.forEach(function(dirName) {
     if (dirName == 'templates') return;
     var dirPath = rootify(dirName);
@@ -25,11 +26,15 @@ function createIndex() {
     walker.on('file', function(dir, stats, next) {
       if (stats.name.charAt(0) !== '.') {
         var path = unroot(dir + '/' + stats.name).replace(/\.js$/, '');
-        var name = inflector.objectify(path.replace(dirName, ''));
-        modules.push({
-          objectName: name,
-          path: path
-        });
+        if (dirName == 'helpers') {
+          helpers.push({path: path});
+        } else {
+          var name = inflector.objectify(path.replace(dirName, ''));
+          modules.push({
+            objectName: name,
+            path: path
+          });
+        }
       }
       next();
     });
@@ -38,7 +43,7 @@ function createIndex() {
   return template.write(
     'build/index.js',
     rootify('index.js'),
-    {modules: modules},
+    {modules: modules, helpers: helpers},
     true
   );
 }
