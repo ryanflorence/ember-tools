@@ -74,6 +74,7 @@ from which `ember create` is called. It's used for other `ember` commands.
 | `--template, -t post/comments` | n/a | `templates/post/comments.handlebars` |
 | `--route, -r taco_cart` | `TacoCartRoute` | `routes/taco_cart.js` |
 | `--mixin, -x tacoable` | `Tacoable` | `mixins/tacoable.js` |
+| `--helper, -l all_caps` | `allCaps` | `helpers/all_caps.js` |
 | `-mvcrt tacos` | `Taco` <br>`TacosView` <br>`TacosController` <br>`TacosRoute` | `models/taco.js` <br>`views/tacos_view` <br>`controllers/tacos_controller.js` <br>`routes/taco_route.js` <br>`templates/tacos.handlebars`|
 
 _Notes:_
@@ -94,6 +95,7 @@ _Notes:_
 - emblem.js templates
 - AMD generators/build
 - ES6 module generators/build
+- Build on top of Yeoman
 
 ## License and Copyright
 
