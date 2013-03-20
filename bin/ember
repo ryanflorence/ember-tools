@@ -3,6 +3,7 @@ var program = require('commander');
 var create = require('../src/commands/create');
 var build = require('../src/commands/build');
 var generate = require('../src/commands/generate');
+var precompile = require('../src/commands/precompile');
 //var message = require('../src/util/message');
 
 program
@@ -39,7 +40,9 @@ program
 program
   .command('precompile')
   .description('precompile templates from src dir to target dir')
-  .action(function() { precompile(program); })
+  .action(function() {
+    precompile.apply(null, arguments);
+  })
   .option('-d, --directory [directory]', 'source template directory')
   .option('-f, --file [file]', 'output file');
 
