@@ -4,6 +4,7 @@ var handlebars = require('handlebars');
 var jsdom = require('jsdom');
 var appDirs = require('../util/appDirs');
 var template = require('../util/template');
+var message = require('../util/message');
 var inflector = require('../util/inflector');
 var walk = require('walk').walkSync;
 var precompile = require('../util/precompile');
@@ -48,6 +49,7 @@ function build() {
                 "-m index -b " + root + "/ `find "+ root + " -name '*.js'` > " +
                 rootify('application.js');
   exec(command, function (error, stdout, stderr) {
+    message.fileCreated(rootify('application.js'));
     console.log(stdout);
     console.log(stderr);
     if (error) throw new Error(error);
