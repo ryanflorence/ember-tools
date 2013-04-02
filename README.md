@@ -22,7 +22,7 @@ Ember Tools
 
 Package versions:
 
-- ember 1.0.0-RC.1
+- ember 1.0.0-RC.2
 - ember-data rev 11
 - handlebars 1.0.0-rc.3
 - jQuery 1.9.1
