@@ -29,6 +29,19 @@ Package versions:
 
 ## Quickstart
 
+Make sure you have Node.js installed:
+
+Ubuntu:
+
+`sudo apt-get install nodejs`
+
+OSX (homebrew):
+
+`brew install node`
+
+Linux binaries and automated installers for OSX and Windows are available on
+the Node.js [downloads page](http://nodejs.org/download/).
+
 ```
 npm install -g ember-tools
 mkdir my-app && cd my-app
