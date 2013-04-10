@@ -11,6 +11,14 @@ describe("create", function() {
     });
   });
 
+  beforeEach(function(done){
+    var testAppDir = __dirname + "/test-app";
+    fs.rmdir(testAppDir, function(err){
+      if (err) throw err;
+      fs.mkdir(testAppDir, done);
+    });
+  });
+
   it("should add a bunch of files and directories", function(done) {
     exec("./bin/ember create test-app", function() {
       helpers.assertPathsExist([
@@ -22,8 +30,8 @@ describe("create", function() {
         "test-app/views",
         "test-app/vendor",
         "test-app/index.html",
-        "test-app/App.js", 
-        "test-app/Store.js", 
+        "test-app/app.js", 
+        "test-app/store.js", 
         "test-app/routes.js",
         "test-app/templates/application.handlebars",
         "test-app/templates/index.handlebars",
@@ -47,8 +55,8 @@ describe("create", function() {
         "./views",
         "./vendor",
         "./index.html",
-        "./App.js", 
-        "./Store.js", 
+        "./app.js", 
+        "./store.js", 
         "./routes.js",
         "./templates/application.handlebars",
         "./templates/index.handlebars",
