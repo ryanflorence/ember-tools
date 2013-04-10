@@ -1,13 +1,13 @@
 var walk = require('walk').walk;
 var fs = require('fs');
-var jsdom = require('jsdom');
 var template = require('../util/template');
 var message = require('../util/message');
+var precompile = require('../../vendor/ember-template-compiler').precompile;
 
 module.exports = function(source, savePath, callback) {
   callback = callback || function(){};
   getTemplates(source, function(templates) {
-    precompile(templates, function(src) {
+    compile(templates, function(src) {
       template.write('precompile/templates.js', savePath, {
         templates: templates
       }, true).then(function() {
@@ -19,22 +19,12 @@ module.exports = function(source, savePath, callback) {
   });
 };
 
-function precompile(templates, callback) {
-  jsdom.env(
-    '<p>dumb I need a dom</p>',
-    [
-      __dirname + "/../../packages/jquery.js",
-      __dirname + "/../../packages/handlebars.js",
-      __dirname + "/../../packages/ember.js"
-    ],
-    function(errors, window) {
-      templates.forEach(function(template) {
-        var fn = window.Ember.Handlebars.precompile(template.content);
-        template.src = fn.toString();
-      });
-      callback(templates);
-    }
-  );
+function compile(templates, callback) {
+  templates.forEach(function(template) {
+    var fn = precompile(template.content);
+    template.src = fn.toString();
+  });
+  callback(templates);
 }
 
 function getTemplates(source, callback) {
