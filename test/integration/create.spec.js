@@ -3,7 +3,7 @@ var fs = require("fs");
 var rm = require("rimraf");
 var helpers = require("../support/helpers");
 
-describe("create", function() {
+describe("create directory", function() {
 
   afterEach(function(done) {
     rm("./test-app", function() {
@@ -22,8 +22,8 @@ describe("create", function() {
         "test-app/views",
         "test-app/vendor",
         "test-app/index.html",
-        "test-app/App.js", 
-        "test-app/Store.js", 
+        "test-app/app.js",
+        "test-app/store.js",
         "test-app/routes.js",
         "test-app/templates/application.handlebars",
         "test-app/templates/index.handlebars",
@@ -35,30 +35,37 @@ describe("create", function() {
       ], done);
     });
   });
+});
+
+describe("create in cwd", function() {
+  afterEach(function(done) {
+    rm("./test-app", done);
+  });
 
   it("scaffolds in the CWD if no directory passed", function(done){
-    exec("./bin/ember create", function() {
+    exec("mkdir test-app && cd test-app && ../bin/ember create", function() {
       helpers.assertPathsExist([
-        "./.ember",
-        "./controllers",
-        "./models",
-        "./routes",
-        "./templates",
-        "./views",
-        "./vendor",
-        "./index.html",
-        "./App.js", 
-        "./Store.js", 
-        "./routes.js",
-        "./templates/application.handlebars",
-        "./templates/index.handlebars",
-        "./vendor/ember-data.js",
-        "./vendor/ember.js",
-        "./vendor/handlebars.js",
-        "./vendor/jquery.js",
-        "./vendor/localstorage_adapter.js"
+        "test-app/.ember",
+        "test-app/controllers",
+        "test-app/models",
+        "test-app/routes",
+        "test-app/templates",
+        "test-app/views",
+        "test-app/vendor",
+        "test-app/index.html",
+        "test-app/app.js",
+        "test-app/store.js",
+        "test-app/routes.js",
+        "test-app/templates/application.handlebars",
+        "test-app/templates/index.handlebars",
+        "test-app/vendor/ember-data.js",
+        "test-app/vendor/ember.js",
+        "test-app/vendor/handlebars.js",
+        "test-app/vendor/jquery.js",
+        "test-app/vendor/localstorage_adapter.js"
       ], done);
     });
   });
 });
+
 
