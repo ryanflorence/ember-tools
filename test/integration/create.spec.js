@@ -35,5 +35,30 @@ describe("create", function() {
       ], done);
     });
   });
+
+  it("scaffolds in the CWD if no directory passed", function(done){
+    exec("./bin/ember create", function() {
+      helpers.assertPathsExist([
+        "./.ember",
+        "./controllers",
+        "./models",
+        "./routes",
+        "./templates",
+        "./views",
+        "./vendor",
+        "./index.html",
+        "./App.js", 
+        "./Store.js", 
+        "./routes.js",
+        "./templates/application.handlebars",
+        "./templates/index.handlebars",
+        "./vendor/ember-data.js",
+        "./vendor/ember.js",
+        "./vendor/handlebars.js",
+        "./vendor/jquery.js",
+        "./vendor/localstorage_adapter.js"
+      ], done);
+    });
+  });
 });
 

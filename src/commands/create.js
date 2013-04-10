@@ -16,7 +16,8 @@ var files = [
 ];
 
 module.exports = function(program) {
-  root = program.args[0] || root;
+  var createOption = program.args[0];
+  root = typeof createOption === 'string' ? createOption : root;
   message.notify("-> Creating application files and directories");
   return makeEmberFile().
     then(makeRootDirectory).

@@ -39,7 +39,8 @@ open js/index.html
 # visit #/people
 ```
 
-**IMPORTANT**: Your ember application is a sub-directory of a bigger project directory. There is an `.ember` file that gets created in the directory from which `ember create` is called. Its used for other `ember` commands.
+**IMPORTANT**: There is an `.ember` file that gets created in the directory
+from which `ember create` is called. It's used for other `ember` commands.
 
 ## Usage
 
