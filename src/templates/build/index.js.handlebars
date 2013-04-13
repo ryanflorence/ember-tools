@@ -13,7 +13,7 @@ var App = window.App = require('./app');
 
 App.Store = require('./store');
 {{#each modules}}
-App.{{objectName}} = require('./{{path}}');{{/each}}
+{{namespace}}{{objectName}} = require('./{{path}}');{{/each}}
 
 require('./routes');
 
