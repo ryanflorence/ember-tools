@@ -15,11 +15,11 @@ var files = [
   'templates/index.handlebars'
 ];
 
-module.exports = function(program) {
-  var createOption = program.args[0];
-  root = typeof createOption === 'string' ? createOption : root;
-  message.notify("-> Creating application files and directories");
-  return makeEmberFile().
+module.exports = function(path, env) {
+  var env = arguments[arguments.length - 1];
+  root = arguments.length > 1 ? path : root;
+  message.notify("-> Creating application files and directories into '"+root+"'");
+  return makeEmberFile({withData: env.data || false}).
     then(makeRootDirectory).
     then(mkdirs).
     then(createFiles).
@@ -72,10 +72,11 @@ function copyLib(name) {
   });
 }
 
-function makeEmberFile() {
+function makeEmberFile(opts) {
   return template.write('create/ember', '.ember', {
     appDir: root,
-    modules: 'cjs'
+    modules: 'cjs',
+    withData: opts.withData+''
   });
 }
 

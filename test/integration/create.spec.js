@@ -12,7 +12,7 @@ describe("create directory", function() {
   });
 
   it("should add a bunch of files and directories", function(done) {
-    exec("./bin/ember create test-app", function() {
+    exec("./bin/ember create -d test-app", function() {
       helpers.assertPathsExist([
         ".ember",
         "test-app/controllers",
@@ -43,7 +43,7 @@ describe("create in cwd", function() {
   });
 
   it("scaffolds in the CWD if no directory passed", function(done){
-    exec("mkdir test-app && cd test-app && ../bin/ember create", function() {
+    exec("mkdir test-app && cd test-app && ../bin/ember create -d", function() {
       helpers.assertPathsExist([
         "test-app/.ember",
         "test-app/controllers",

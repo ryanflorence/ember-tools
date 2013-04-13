@@ -32,7 +32,7 @@ Package versions:
 ```
 npm install -g ember-tools
 mkdir my-app && cd my-app
-ember create js
+ember create -d js
 ember generate --scaffold person name:string age:number
 ember build
 open js/index.html

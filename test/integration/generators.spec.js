@@ -8,7 +8,7 @@ var rm = require("rimraf");
 var helpers = require("../support/helpers");
 
 function createTestApp(done) {
-  exec("./bin/ember create test-app", function() {
+  exec("./bin/ember create -d test-app", function() {
     fs.exists('.ember', function(exists) {
       exists.should.equal(true);
       done();

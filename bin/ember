@@ -12,9 +12,10 @@ program
 
 program
   .command('create')
-  .description('creates a new ember application')
-  .usage('[dir]')
-  .action(function() { create(program); });
+  .description('creates a new ember application at [dir]')
+  .usage('[options] [dir]')
+  .action(function() { create.apply(null, arguments); })
+  .option('-d, --data', 'use ember data');
 
 program
   .command('build')

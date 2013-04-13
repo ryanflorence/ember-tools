@@ -7,10 +7,13 @@ var message = require('../util/message');
 var inflector = require('../util/inflector');
 var walk = require('walk').walkSync;
 var precompile = require('../util/precompile');
-var root;
+
+// globals, gotta get rid of this
+var root, config;
 
 module.exports = function(program) {
-  root = require('../util/config')().appDir;
+  config = require('../util/config')();
+  root = config.appDir;
   precompile(rootify('templates'), rootify('templates.js'), function() {
     createIndex().then(build);
   });
@@ -43,7 +46,7 @@ function createIndex() {
   return template.write(
     'build/index.js',
     rootify('index.js'),
-    {modules: modules, helpers: helpers},
+    {modules: modules, helpers: helpers, withData: config.withData},
     true
   );
 }
