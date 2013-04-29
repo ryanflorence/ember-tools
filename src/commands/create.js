@@ -9,8 +9,8 @@ var libPath = __dirname + '/../../packages';
 var files = [
   'index.html',
   'app.js',
-  'store.js',
-  'routes.js',
+  'config/store.js',
+  'config/routes.js',
   'templates/application.handlebars',
   'templates/index.handlebars'
 ];

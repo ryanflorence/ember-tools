@@ -10,8 +10,8 @@ require('./templates');
 
 var App = window.App = require('./app');
 
-App.Store = require('./store');
+App.Store = require('./config/store');
 
 
-require('./routes');
+require('./config/routes');
 

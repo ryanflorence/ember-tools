@@ -23,7 +23,7 @@ function createIndex() {
   var modules = [];
   var helpers = [];
   appDirs.forEach(function(dirName) {
-    if (dirName == 'templates') return;
+    if (dirName == 'templates' || dirName == 'config') return;
     var dirPath = rootify(dirName);
     var walker = walk(dirPath);
     walker.on('file', function(dir, stats, next) {

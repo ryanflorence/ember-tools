@@ -10,12 +10,12 @@ require('./templates');
 
 var App = window.App = require('./app');
 
-App.Store = require('./store');
+App.Store = require('./config/store');
 
 App.CowController = require('./controllers/cow_controller');
 App.Cow = require('./models/cow');
 App.CowRoute = require('./routes/cow_route');
 App.CowView = require('./views/cow_view');
 
-require('./routes');
+require('./config/routes');
 

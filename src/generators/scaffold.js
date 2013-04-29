@@ -140,8 +140,8 @@ function createTemplates(resource, fields) {
 
 function addRoutes(resource) {
   resource = inflector.underscore(resource);
-  var routesPath = root + '/routes.js';
-  var fragment = template.compile('scaffold/routes.js', {
+  var routesPath = root + '/config/routes.js';
+  var fragment = template.compile('scaffold/config/routes.js', {
     resource: resource,
     resources: inflector.pluralize(resource)
   });

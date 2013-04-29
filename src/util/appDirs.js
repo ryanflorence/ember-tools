@@ -1,4 +1,5 @@
 module.exports = [
+  'config',
   'controllers',
   'helpers',
   'models',

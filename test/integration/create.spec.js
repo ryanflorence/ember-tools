@@ -15,6 +15,7 @@ describe("create directory", function() {
     exec("./bin/ember create -d test-app", function() {
       helpers.assertPathsExist([
         ".ember",
+        "test-app/config",
         "test-app/controllers",
         "test-app/models",
         "test-app/routes",
@@ -23,8 +24,8 @@ describe("create directory", function() {
         "test-app/vendor",
         "test-app/index.html",
         "test-app/app.js",
-        "test-app/store.js",
-        "test-app/routes.js",
+        "test-app/config/store.js",
+        "test-app/config/routes.js",
         "test-app/templates/application.handlebars",
         "test-app/templates/index.handlebars",
         "test-app/vendor/ember-data.js",
@@ -46,6 +47,7 @@ describe("create in cwd", function() {
     exec("mkdir test-app && cd test-app && ../bin/ember create -d", function() {
       helpers.assertPathsExist([
         "test-app/.ember",
+        "test-app/config",
         "test-app/controllers",
         "test-app/models",
         "test-app/routes",
@@ -54,8 +56,8 @@ describe("create in cwd", function() {
         "test-app/vendor",
         "test-app/index.html",
         "test-app/app.js",
-        "test-app/store.js",
-        "test-app/routes.js",
+        "test-app/config/store.js",
+        "test-app/config/routes.js",
         "test-app/templates/application.handlebars",
         "test-app/templates/index.handlebars",
         "test-app/vendor/ember-data.js",
@@ -67,5 +69,4 @@ describe("create in cwd", function() {
     });
   });
 });
-
 
