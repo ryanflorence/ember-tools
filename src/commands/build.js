@@ -53,7 +53,7 @@ function createIndex() {
 
 function build() {
   var command = __dirname + '/../../node_modules/browserbuild/bin/browserbuild ' +
-                "-m index -b " + root + "/ `find "+ root + " -name '*.js'` > " +
+                "-m index -b " + root + "/ `find -L "+ root + " -name '*.js'` > " +
                 rootify('application.js');
   exec(command, function (error, stdout, stderr) {
     message.fileCreated(rootify('application.js'));
