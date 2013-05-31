@@ -21,7 +21,9 @@ program
   .command('build')
   .description('compiles templates and builds the app')
   .usage(' ')
-  .action(function() { build(program); })
+  .action(build)
+  .option('-c, --no-cleanup', "don't cleanup intermediate build files")
+  .option('-o, --out-file [path]', 'the file to save the build to, defaults to application.js')
 
 program
   .command('generate')

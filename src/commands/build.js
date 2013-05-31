@@ -9,10 +9,12 @@ var walk = require('walk').walkSync;
 var precompile = require('../util/precompile');
 var config = require('../util/config');
 
-module.exports = function(program) {
+module.exports = function(env) {
   precompileTemplates(function() {
     createIndex();
-    build();
+    build(env, function() {
+      if (env.cleanup) cleanup();
+    });
   });
 };
 
@@ -48,16 +50,18 @@ function createIndex() {
   fs.writeTemplate('build', 'index.js', locals, getAssetPath('index.js'), 'force');
 }
 
-function build() {
+function build(env, cb) {
   var root = config().jsPath;
+  var outFile = (env.outFile || getAssetPath('application.js'));
   var command = __dirname + '/../../node_modules/browserbuild/bin/browserbuild ' +
-                "-m index -g App -b " + root + "/ `find "+ root + " -name '*.js'` > " +
-                getAssetPath('application.js');
+                "-m index -g App -b " + root +
+                "/ `find "+ root + " -name '*.js'`" +
+                " > "+outFile;
   exec(command, function (error, stdout, stderr) {
-    message.fileCreated(getAssetPath('application.js'));
+    message.fileCreated(outFile);
     console.log(stdout, stderr);
     if (error) throw new Error(error);
-    cleanup();
+    cb();
   });
 }
 
