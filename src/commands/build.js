@@ -2,7 +2,6 @@ var exec = require('child_process').exec;
 var fs = require('../util/fs');
 var handlebars = require('handlebars');
 var appDirs = require('../util/appDirs');
-var template = require('../util/template');
 var message = require('../util/message');
 var inflector = require('../util/inflector');
 var walk = require('walk').walkSync;
