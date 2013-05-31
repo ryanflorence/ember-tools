@@ -1,5 +1,14 @@
 // require other, non-ember dependencies here, ie:
 // require('./vendor/moment');
 
-module.exports = Ember.Application.create();
+require('../vendor/jquery');
+require('../vendor/handlebars');
+require('../vendor/ember');
+require('../vendor/ember-data');
+var Store = require('./store');
+
+var App = Ember.Application.create();
+App.Store = Store;
+
+module.exports = App;
 

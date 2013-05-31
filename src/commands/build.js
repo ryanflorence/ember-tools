@@ -44,7 +44,7 @@ function createIndex() {
     });
   });
 
-  var locals = {modules: modules, helpers: helpers, withData: config().withData};
+  var locals = {modules: modules, helpers: helpers};
   fs.writeTemplate('build', 'index.js', locals, getAssetPath('index.js'), 'force');
 }
 
