@@ -45,7 +45,7 @@ function writeConfigFile(paths) {
 
 function writeFiles(paths) {
   [
-    'app.js',
+    'config/app.js',
     'config/store.js',
     'config/routes.js',
     'templates/application.hbs',
@@ -54,7 +54,8 @@ function writeFiles(paths) {
     var savePath = paths.js+'/'+file;
     fs.writeTemplate('create', file, {}, savePath);
   });
-  fs.writeTemplate('create', 'index.html', {}, paths.app+'/index.html');
+  var locals = {jsPath: paths.jsRelative};
+  fs.writeTemplate('create', 'index.html', locals, paths.app+'/index.html');
 }
 
 function copyVendor(paths) {

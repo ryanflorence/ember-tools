@@ -48,5 +48,3 @@ function getTemplates(source, callback) {
   });
 }
 
-
-

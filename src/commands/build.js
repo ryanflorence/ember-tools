@@ -1,5 +1,5 @@
 var exec = require('child_process').exec;
-var fs = require('fs');
+var fs = require('../util/fs');
 var handlebars = require('handlebars');
 var appDirs = require('../util/appDirs');
 var template = require('../util/template');
@@ -7,28 +7,29 @@ var message = require('../util/message');
 var inflector = require('../util/inflector');
 var walk = require('walk').walkSync;
 var precompile = require('../util/precompile');
-
-// globals, gotta get rid of this
-var root, config;
+var config = require('../util/config');
 
 module.exports = function(program) {
-  config = require('../util/config')();
-  root = config.appDir;
-  precompile(rootify('templates'), rootify('templates.js'), function() {
-    createIndex().then(build);
+  precompileTemplates(function() {
+    createIndex();
+    build();
   });
 };
+
+function precompileTemplates(cb) {
+  precompile(getAssetPath('templates'), getAssetPath('templates.js'), cb);
+}
 
 function createIndex() {
   var modules = [];
   var helpers = [];
   appDirs.forEach(function(dirName) {
     if (dirName == 'templates' || dirName == 'config') return;
-    var dirPath = rootify(dirName);
+    var dirPath = getAssetPath(dirName);
     var walker = walk(dirPath);
     walker.on('file', function(dir, stats, next) {
       if (stats.name.charAt(0) !== '.') {
-        var path = unroot(dir + '/' + stats.name).replace(/\.js$/, '');
+        var path = unroot(dir+'/'+stats.name).replace(/\.js$/, '');
         if (dirName == 'helpers') {
           helpers.push({path: path});
         } else {
@@ -43,37 +44,33 @@ function createIndex() {
     });
   });
 
-  return template.write(
-    'build/index.js',
-    rootify('index.js'),
-    {modules: modules, helpers: helpers, withData: config.withData},
-    true
-  );
+  var locals = {modules: modules, helpers: helpers, withData: config().withData};
+  fs.writeTemplate('build', 'index.js', locals, getAssetPath('index.js'), 'force');
 }
 
 function build() {
+  var root = config().jsPath;
   var command = __dirname + '/../../node_modules/browserbuild/bin/browserbuild ' +
-                "-m index -b " + root + "/ `find "+ root + " -name '*.js'` > " +
-                rootify('application.js');
+                "-m index -g App -b " + root + "/ `find "+ root + " -name '*.js'` > " +
+                getAssetPath('application.js');
   exec(command, function (error, stdout, stderr) {
-    message.fileCreated(rootify('application.js'));
-    console.log(stdout);
-    console.log(stderr);
+    message.fileCreated(getAssetPath('application.js'));
+    console.log(stdout, stderr);
     if (error) throw new Error(error);
     cleanup();
   });
 }
 
 function cleanup() {
-  //fs.unlink(rootify('index.js'));
-  //fs.unlink(rootify('templates.js'));
+  fs.unlink(getAssetPath('index.js'));
+  fs.unlink(getAssetPath('templates.js'));
 }
 
-function rootify(path) {
-  return root + '/' + path;
+function getAssetPath(path) {
+  return config().jsPath+'/'+path;
 }
 
 function unroot(path) {
-  return path.replace(root + '/', '');
+  return path.replace(config().jsPath+'/', '');
 }
 

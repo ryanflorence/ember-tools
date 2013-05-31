@@ -17,8 +17,8 @@ fs.mkdirpSync = function(path) {
 };
 
 var writeFileSync = fs.writeFileSync;
-fs.writeFileSync = function(fileName, data) {
-  if (fs.existsSync(fileName)) {
+fs.writeFileSync = function(fileName, data, force) {
+  if (force != 'force' && fs.existsSync(fileName)) {
     if (!msg.confirm(fileName+' exists, overwrite?')) {
       return msg.fileSkipped(fileName);
     }
@@ -27,11 +27,11 @@ fs.writeFileSync = function(fileName, data) {
   return msg.fileCreated(fileName);
 };
 
-fs.writeTemplate = function(command, templateName, locals, savePath) {
+fs.writeTemplate = function(command, templateName, locals, savePath, force) {
   var templatePath = __dirname+'/../templates/'+command+'/'+templateName+'.hbs';
   var src = renderTemplate(templatePath, locals);
   savePath = savePath || config().jsPath+'/'+command+'/'+templateName;
-  fs.writeFileSync(savePath, src);
+  fs.writeFileSync(savePath, src, force);
 };
 
 fs.writeGenerator = function(generatorType, resourceName, locals) {
