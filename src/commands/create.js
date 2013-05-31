@@ -1,101 +1,63 @@
-var fs = require('../util/fs-promised');
-var rsvp = require('rsvp-that-works');
-var message = require('../util/message');
+// in other commands we use the configuration file, but since its created in
+// this file, we don't.
+
+var fs = require('../util/fs');
+var msg = require('../util/message');
 var appDirs = require('../util/appDirs');
-var template = require('../util/template');
 
-var root = '.';
-var libPath = __dirname + '/../../packages';
-var files = [
-  'index.html',
-  'app.js',
-  'config/store.js',
-  'config/routes.js',
-  'templates/application.handlebars',
-  'templates/index.handlebars'
-];
-
-module.exports = function(path, env) {
-  var env = arguments[arguments.length - 1];
-  root = arguments.length > 1 ? path : root;
-  message.notify("-> Creating application files and directories into '"+root+"'");
-  return makeEmberFile({withData: env.data || false}).
-    then(makeRootDirectory).
-    then(mkdirs).
-    then(createFiles).
-    then(copyLibs);
+var create = module.exports = function(appPath, env) {
+  var paths = create.getPaths.apply(null, arguments);
+  if (!paths) msg.error("Hmm, I didn't like that. See 'ember create --help'.");
+  mkdirs(paths);
+  writeConfigFile(paths);
+  writeFiles(paths);
+  copyVendor(paths);
 };
 
-function makeRootDirectory() {
-  return mkdirUnlessExists(root);
-}
+create.getPaths = function(appPath, env) {
+  if (arguments.length > 2) return false;
+  if (arguments.length == 1) {
+    env = appPath;
+    appPath = '.';
+  }
+  var jsPath = appPath + '/' + (env.jsPath || 'js');
+  return { app: appPath, js: jsPath };
+};
 
-function mkdirs() {
-  return rsvp.all(appDirs.map(mkdir));
-}
-
-function mkdir(path) {
-  return mkdirUnlessExists(rootify(path));
-}
-
-function createFiles() {
-  return rsvp.all(files.map(createFile));
-}
-
-function createFile(name) {
-  var path = rootify(name);
-  return template.write('create/' + name, path);
-}
-
-function copyLibs() {
-  return mkdir('vendor').then(function() {
-    return fs.readdir(libPath).then(function(libs) {
-      return rsvp.all(libs.map(copyLib));
-    });
+function mkdirs(paths) {
+  fs.mkdirpSync(paths.app);
+  fs.mkdirpSync(paths.js);
+  fs.mkdirpSync(paths.js+'/vendor');
+  appDirs.forEach(function(dir) {
+    fs.mkdirpSync(paths.js+'/'+dir);
   });
 }
 
-function copyLib(name) {
-  var targetPath = rootify('vendor/' + name);
-  var packagePath = libPath + '/' + name;
-  return fs.exists(targetPath).then(function(exists){
-    if (exists) {
-      message.fileExists(targetPath);
-      return exists;
-    }
-    return fs.readFile(packagePath).then(function(fileData) {
-      var src = fileData.toString();
-      return fs.writeFile(targetPath, src).then(function() {
-        message.fileCreated(targetPath);
-      }, error);
-    });
+function writeConfigFile(paths) {
+  var locals = { modules: 'common-js', jsPath: paths.js };
+  fs.writeTemplate('create', 'ember.json', locals, paths.app+'/ember.json');
+}
+
+function writeFiles(paths) {
+  [
+    'app.js',
+    'config/store.js',
+    'config/routes.js',
+    'templates/application.hbs',
+    'templates/index.hbs'
+  ].forEach(function(file) {
+    var savePath = paths.js+'/'+file;
+    fs.writeTemplate('create', file, {}, savePath);
+  });
+  fs.writeTemplate('create', 'index.html', {}, paths.app+'/index.html');
+}
+
+function copyVendor(paths) {
+  var src = __dirname+'/../../packages';
+  var dest = paths.js+'/vendor';
+  fs.readdirSync(src).forEach(function(filePath) {
+    var file = fs.readFileSync(src + '/' + filePath).toString();
+    fs.writeFileSync(dest + '/' + filePath, file);
   });
 }
 
-function makeEmberFile(opts) {
-  return template.write('create/ember', '.ember', {
-    appDir: root,
-    modules: 'cjs',
-    withData: opts.withData+''
-  });
-}
-
-function rootify(path) {
-  return root + '/' + path;
-}
-
-function error(err) {
-  throw new Error(err);
-}
-
-function mkdirUnlessExists(path) {
-  return fs.exists(path).then(function(exists) {
-    if (exists) {
-      message.fileExists(path);
-      return exists;
-    } else {
-      message.fileCreated(path);
-      return fs.mkdir(path);
-    }
-  });
-}

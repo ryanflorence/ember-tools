@@ -14,8 +14,8 @@ program
   .command('create')
   .description('creates a new ember application at [dir]')
   .usage('[options] [dir]')
-  .action(function() { create.apply(null, arguments); })
-  .option('-d, --data', 'use ember data');
+  .option('-p, --js-path [path]', 'the directory place javascript assets')
+  .action(create);
 
 program
   .command('build')
