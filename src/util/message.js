@@ -32,9 +32,13 @@ exports.fileExists = function(path) {
   console.log(yellow("   exists:\t") + path);
 };
 
-exports.confirm = function(message) {
-  process.stdout.write(yellow('-> ')+message+' (y/n): ');
-  var userInput = prompt().toLowerCase();
+exports.confirm = function(question) {
+  var userInput = exports.prompt(question+' (y/n)');
   return userInput == 'y' || userInput == 'yes';
+};
+
+exports.prompt = function(question) {
+  process.stdout.write(yellow('-> ')+question+': ');
+  return prompt().toLowerCase();
 };
 
