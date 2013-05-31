@@ -10,4 +10,3 @@ require('./config/routes');
 
 module.exports = App;
 
-

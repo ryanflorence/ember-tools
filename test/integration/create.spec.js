@@ -6,33 +6,31 @@ var helpers = require("../support/helpers");
 describe("create directory", function() {
 
   afterEach(function(done) {
-    rm("./test-app", function() {
-      fs.unlink('.ember', done);
-    });
+    rm("./test-app", done);
   });
 
   it("should add a bunch of files and directories", function(done) {
-    exec("./bin/ember create -d test-app", function() {
+    exec("./bin/ember create test-app", function() {
       helpers.assertPathsExist([
-        ".ember",
-        "test-app/config",
-        "test-app/controllers",
-        "test-app/models",
-        "test-app/routes",
-        "test-app/templates",
-        "test-app/views",
-        "test-app/vendor",
+        "test-app/ember.json",
         "test-app/index.html",
-        "test-app/app.js",
-        "test-app/config/store.js",
-        "test-app/config/routes.js",
-        "test-app/templates/application.handlebars",
-        "test-app/templates/index.handlebars",
-        "test-app/vendor/ember-data.js",
-        "test-app/vendor/ember.js",
-        "test-app/vendor/handlebars.js",
-        "test-app/vendor/jquery.js",
-        "test-app/vendor/localstorage_adapter.js"
+        "test-app/js/config",
+        "test-app/js/controllers",
+        "test-app/js/models",
+        "test-app/js/routes",
+        "test-app/js/templates",
+        "test-app/js/views",
+        "test-app/js/vendor",
+        "test-app/js/config/app.js",
+        "test-app/js/config/store.js",
+        "test-app/js/config/routes.js",
+        "test-app/js/templates/application.hbs",
+        "test-app/js/templates/index.hbs",
+        "test-app/js/vendor/ember-data.js",
+        "test-app/js/vendor/ember.js",
+        "test-app/js/vendor/handlebars.js",
+        "test-app/js/vendor/jquery.js",
+        "test-app/js/vendor/localstorage_adapter.js"
       ], done);
     });
   });
@@ -44,27 +42,27 @@ describe("create in cwd", function() {
   });
 
   it("scaffolds in the CWD if no directory passed", function(done){
-    exec("mkdir test-app && cd test-app && ../bin/ember create -d", function() {
+    exec("mkdir test-app && cd test-app && ../bin/ember create", function() {
       helpers.assertPathsExist([
-        "test-app/.ember",
-        "test-app/config",
-        "test-app/controllers",
-        "test-app/models",
-        "test-app/routes",
-        "test-app/templates",
-        "test-app/views",
-        "test-app/vendor",
+        "test-app/ember.json",
         "test-app/index.html",
-        "test-app/app.js",
-        "test-app/config/store.js",
-        "test-app/config/routes.js",
-        "test-app/templates/application.handlebars",
-        "test-app/templates/index.handlebars",
-        "test-app/vendor/ember-data.js",
-        "test-app/vendor/ember.js",
-        "test-app/vendor/handlebars.js",
-        "test-app/vendor/jquery.js",
-        "test-app/vendor/localstorage_adapter.js"
+        "test-app/js/config",
+        "test-app/js/controllers",
+        "test-app/js/models",
+        "test-app/js/routes",
+        "test-app/js/templates",
+        "test-app/js/views",
+        "test-app/js/vendor",
+        "test-app/js/config/app.js",
+        "test-app/js/config/store.js",
+        "test-app/js/config/routes.js",
+        "test-app/js/templates/application.hbs",
+        "test-app/js/templates/index.hbs",
+        "test-app/js/vendor/ember-data.js",
+        "test-app/js/vendor/ember.js",
+        "test-app/js/vendor/handlebars.js",
+        "test-app/js/vendor/jquery.js",
+        "test-app/js/vendor/localstorage_adapter.js"
       ], done);
     });
   });

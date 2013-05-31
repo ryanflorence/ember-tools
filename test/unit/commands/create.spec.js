@@ -4,14 +4,16 @@ describe('create.getPaths', function() {
   it('defaults to application path "." and asset path "./js"', function() {
     create.getPaths({}).should.eql({
       app: '.',
-      js: './js'
+      js: './js',
+      jsRelative: 'js'
     });
   });
 
   it('uses first argument for application path', function() {
     create.getPaths('my-app', {}).should.eql({
       app: 'my-app',
-      js: 'my-app/js'
+      js: 'my-app/js',
+      jsRelative: 'js'
     });
   });
 
@@ -22,7 +24,8 @@ describe('create.getPaths', function() {
   it('uses env.jsPath', function() {
     create.getPaths({jsPath: 'public/js'}).should.eql({
       app: '.',
-      js: './public/js'
+      js: './public/js',
+      jsRelative: 'public/js'
     });
   });
 });
