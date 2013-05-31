@@ -11,9 +11,10 @@ var config = require('../util/config');
 
 module.exports = function(env) {
   precompileTemplates(function() {
-    createIndex();
-    build(env, function() {
-      if (env.cleanup) cleanup();
+    createIndex(function() {
+      build(env, function() {
+        if (env.cleanup) cleanup();
+      });
     });
   });
 };
@@ -22,10 +23,10 @@ function precompileTemplates(cb) {
   precompile(getAssetPath('templates'), getAssetPath('templates.js'), cb);
 }
 
-function createIndex() {
+function createIndex(cb) {
   var modules = [];
   var helpers = [];
-  appDirs.forEach(function(dirName) {
+  appDirs.forEach(function(dirName, index, array) {
     if (dirName == 'templates' || dirName == 'config') return;
     var dirPath = getAssetPath(dirName);
     var walker = walk(dirPath);
@@ -44,10 +45,13 @@ function createIndex() {
       }
       next();
     });
+    walker.on('end', function() {
+      if (index != array.length - 1) return;
+      var locals = {modules: modules, helpers: helpers};
+      fs.writeTemplate('build', 'index.js', locals, getAssetPath('index.js'), 'force');
+      cb();
+    });
   });
-
-  var locals = {modules: modules, helpers: helpers};
-  fs.writeTemplate('build', 'index.js', locals, getAssetPath('index.js'), 'force');
 }
 
 function build(env, cb) {

@@ -63,7 +63,7 @@ function copyVendor(paths) {
   var dest = paths.js+'/vendor';
   fs.readdirSync(src).forEach(function(filePath) {
     var file = fs.readFileSync(src + '/' + filePath).toString();
-    fs.writeFileSync(dest + '/' + filePath, file);
+    fs.createFileSync(dest + '/' + filePath, file);
   });
 }
 

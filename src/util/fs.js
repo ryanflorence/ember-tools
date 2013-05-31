@@ -23,6 +23,7 @@ fs.writeFileSync = function(fileName, data, force) {
       return msg.fileSkipped(fileName);
     }
   }
+  fs.createFileSync(fileName);
   writeFileSync(fileName, data);
   return msg.fileCreated(fileName);
 };

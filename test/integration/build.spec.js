@@ -4,9 +4,9 @@ var rm = require("rimraf");
 var helpers = require("../support/helpers");
 
 function create(done) {
-  exec("./bin/ember create -d test-app", function(err) {
+  exec("./bin/ember create -c test-app", function(err) {
     if (err) throw new Error(err);
-    fs.exists('.ember', function(exists) {
+    fs.exists('test-app/ember.json', function(exists) {
       exists.should.equal(true);
       done();
     });
@@ -14,9 +14,7 @@ function create(done) {
 }
 
 function cleanup(done) {
-  rm("./test-app", function() {
-    fs.unlink('.ember', done);
-  });
+  rm("./test-app", done);
 }
 
 function build(done) {
