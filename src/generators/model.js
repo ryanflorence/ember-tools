@@ -1,11 +1,11 @@
-var template = require('../util/template');
+var fs = require('../util/fs');
 var inflector = require('../util/inflector');
 
 module.exports = function(resource, env) {
   var resourceName = inflector.underscore(inflector.singularize(resource));
-  return template.generate('model', resourceName, {
+  fs.writeGenerator('model', resourceName, {
     fields: env.fields,
     objectName: inflector.objectify(resourceName)
-  }, true);
+  });
 };
 

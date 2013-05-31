@@ -1,8 +1,8 @@
-var template = require('../util/template');
+var fs = require('../util/fs');
 var inflector = require('../util/inflector');
 
 module.exports = function(resource) {
   var resourceName = inflector.underscore(resource);
-  return template.generate('template', resourceName, {name: resource});
+  fs.writeGenerator('template', resourceName, {name: resource});
 };
 

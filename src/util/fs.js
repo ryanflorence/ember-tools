@@ -1,8 +1,8 @@
 var fs = require('fs-extra');
-var msg = require('./message');
 var handlebars = require('handlebars');
+var msg = require('./message');
+var inflector = require('./inflector');
 var config = require('./config');
-var conf;
 
 module.exports = fs;
 
@@ -28,18 +28,22 @@ fs.writeFileSync = function(fileName, data) {
 };
 
 fs.writeTemplate = function(command, templateName, locals, savePath) {
-  locals = locals || {};
-  savePath = savePath || getSavePath(command, templateName);
   var templatePath = __dirname+'/../templates/'+command+'/'+templateName+'.hbs';
-  var template = fs.readFileSync(templatePath).toString();
-  var compiled = handlebars.compile(template);
-  var file = compiled(locals);
-  savePath = savePath || getSavePath(command, templateName);
-  fs.writeFileSync(savePath, file);
+  var src = renderTemplate(templatePath, locals);
+  savePath = savePath || config().jsPath+'/'+command+'/'+templateName;
+  fs.writeFileSync(savePath, src);
 };
 
-function getSavePath(command, templateName) {
-  conf = conf || config();
-  return conf.jsPath+'/'+command+'/'+templateName;
+fs.writeGenerator = function(generatorType, resourceName, locals) {
+  var ext = (generatorType == 'template') ? '.hbs' : '.js';
+  var pluralType = inflector.pluralize(generatorType);
+  var savePath = config().jsPath+'/'+pluralType+'/'+resourceName+ext;
+  fs.writeTemplate('generate', generatorType+ext, locals, savePath);
+};
+
+function renderTemplate(templatePath, locals) {
+  var template = fs.readFileSync(templatePath).toString();
+  var compiled = handlebars.compile(template);
+  return compiled(locals);
 }
 

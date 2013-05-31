@@ -20,8 +20,13 @@ create.getPaths = function(appPath, env) {
     env = appPath;
     appPath = '.';
   }
-  var jsPath = appPath + '/' + (env.jsPath || 'js');
-  return { app: appPath, js: jsPath };
+  var jsRelative = env.jsPath || 'js';
+  var jsPath = appPath+'/'+jsRelative;
+  return {
+    app: appPath,
+    js: jsPath,
+    jsRelative: jsRelative
+  };
 };
 
 function mkdirs(paths) {
@@ -34,7 +39,7 @@ function mkdirs(paths) {
 }
 
 function writeConfigFile(paths) {
-  var locals = { modules: 'common-js', jsPath: paths.js };
+  var locals = { modules: 'cjs', jsPath: paths.jsRelative };
   fs.writeTemplate('create', 'ember.json', locals, paths.app+'/ember.json');
 }
 
