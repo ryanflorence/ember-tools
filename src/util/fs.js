@@ -30,7 +30,7 @@ fs.writeFileSync = function(fileName, data, force) {
 
 fs.writeTemplate = function(command, templateName, locals, savePath, force) {
   var templatePath = __dirname+'/../templates/'+command+'/'+templateName+'.hbs';
-  var src = renderTemplate(templatePath, locals);
+  var src = fs.renderTemplate(templatePath, locals);
   savePath = savePath || config().jsPath+'/'+command+'/'+templateName;
   fs.writeFileSync(savePath, src, force);
 };
@@ -42,9 +42,9 @@ fs.writeGenerator = function(generatorType, resourceName, locals) {
   fs.writeTemplate('generate', generatorType+ext, locals, savePath);
 };
 
-function renderTemplate(templatePath, locals) {
+fs.renderTemplate = function(templatePath, locals) {
   var template = fs.readFileSync(templatePath).toString();
   var compiled = handlebars.compile(template);
   return compiled(locals);
-}
+};
 
