@@ -17,7 +17,8 @@
   "devDependencies": {
     "mocha": "*",
     "should": "*",
-    "rimraf": "*"
+    "rimraf": "*",
+    "testem": "*"
   },
   "scripts": {
     "test": "node_modules/.bin/mocha --require should --reporter dot --ui bdd --growl $(find test -name \"*.spec.js\")"

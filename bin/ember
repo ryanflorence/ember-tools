@@ -14,7 +14,7 @@ program
   .command('create')
   .description('creates a new ember application at [dir]')
   .usage('[options] [dir]')
-  .option('-p, --js-path [path]', 'the directory place javascript assets')
+  .option('-p, --js-path [path]', 'the directory place javascript assets, defaults to [dir]/js')
   .action(create);
 
 program
