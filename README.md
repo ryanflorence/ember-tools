@@ -18,29 +18,26 @@ Ember Tools
 
 ## Version Information
 
-**Current Version: 0.1.3**
+**Current Version: 0.2.0**
 
 Package versions:
 
-- ember 1.0.0-RC.2
-- ember-data rev 11
-- handlebars 1.0.0-rc.3
+- ember v1.0.0-RC.5
+- ember-data revision 12
+- handlebars v1.0.0-rc.4
 - jQuery 1.9.1
 
 ## Quickstart
 
 ```
 npm install -g ember-tools
-mkdir my-app && cd my-app
-ember create -d js
+ember create my-app
+cd my-app
 ember generate --scaffold person name:string age:number
 ember build
 open js/index.html
 # visit #/people
 ```
-
-**IMPORTANT**: There is an `.ember` file that gets created in the directory
-from which `ember create` is called. It's used for other `ember` commands.
 
 ## Usage
 
@@ -81,21 +78,6 @@ _Notes:_
 
 - Models will always be singular.
 - Sub-directories will be created for you if they don't exist.
-- Files will be overwritten **without warning** (for now, anyway).
-
-
-## Roadmap
-
-- some refactoring and unit tests (its pretty much a bunch of integration tests right now)
-- travis-ci
-- baked in testing and generated tests
-- support for custom application namespace (instead of just `App`)
-- warn before overwriting a file
-- build application.js to optional path
-- emblem.js templates
-- AMD generators/build
-- ES6 module generators/build
-- Build on top of Yeoman
 
 ## License and Copyright
 
@@ -109,8 +91,11 @@ Run tests with:
 
 `npm test`
 
-Or just use mocha:
+and the browser sanity tests:
 
-`mocha test/build --watch`
+`npm run-script browser`
 
 Its usually easiest to create a branch and send a pull request against that branch instead of master. Single commits are preferred (no big deal though, I can squash and cherry-pick).
+
+Thanks for using ember-tools!
+

@@ -2,7 +2,7 @@
   "framework": "qunit",
   "src_files": [
     "test-app/js/application.js",
-    "test/integration/browser.spec.js"
+    "test/integration/browser.js"
   ]
 }
 

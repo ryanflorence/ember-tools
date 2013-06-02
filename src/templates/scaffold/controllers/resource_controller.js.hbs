@@ -4,7 +4,7 @@ var {{objectName}} = Ember.ObjectController.extend({
     if (!confirm('Are you sure?')) return;
     this.get('model').deleteRecord();
     this.get('store').commit();
-    this.get('target').transitionTo('{{resourcesRoute}}');
+    this.get('target.router').transitionTo('{{resourcesRoute}}');
   }
 
 });
