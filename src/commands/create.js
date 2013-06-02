@@ -12,6 +12,7 @@ var create = module.exports = function(appPath, env) {
   writeConfigFile(paths);
   writeFiles(paths);
   copyVendor(paths);
+  msg.notify("All done! Start with `config/routes.js` to add routes to your app.");
 };
 
 create.getPaths = function(appPath, env) {
