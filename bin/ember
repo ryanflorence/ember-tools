@@ -14,14 +14,16 @@ program
   .command('create')
   .description('creates a new ember application at [dir]')
   .usage('[options] [dir]')
-  .action(function() { create.apply(null, arguments); })
-  .option('-d, --data', 'use ember data');
+  .option('-p, --js-path [path]', 'the directory place javascript assets, defaults to [dir]/js')
+  .action(create);
 
 program
   .command('build')
   .description('compiles templates and builds the app')
   .usage(' ')
-  .action(function() { build(program); })
+  .action(build)
+  .option('-c, --no-cleanup', "don't cleanup intermediate build files")
+  .option('-o, --out-file [path]', 'the file to save the build to, defaults to application.js')
 
 program
   .command('generate')

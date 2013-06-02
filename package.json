@@ -5,19 +5,20 @@
     "ember": "./bin/ember"
   },
   "dependencies": {
+    "sync-prompt": "*",
     "commander": "1.1.1",
     "cli-color": "0.2.1",
     "walk": "2.2.1",
     "handlebars": "1.0.10",
     "fleck": "0.5.1",
-    "rsvp-that-works": "*",
     "browserbuild": "0.6.0",
     "fs-extra": "0.5.0"
   },
   "devDependencies": {
     "mocha": "*",
     "should": "*",
-    "rimraf": "*"
+    "rimraf": "*",
+    "testem": "*"
   },
   "scripts": {
     "test": "node_modules/.bin/mocha --require should --reporter dot --ui bdd --growl $(find test -name \"*.spec.js\")"
