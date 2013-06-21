@@ -1,5 +1,6 @@
 var exec = require('child_process').exec;
 var fs = require('../util/fs');
+var glob = require('glob');
 var handlebars = require('handlebars');
 var appDirs = require('../util/appDirs');
 var message = require('../util/message');
@@ -56,9 +57,11 @@ function createIndex(cb) {
 function build(env, cb) {
   var root = config().jsPath;
   var outFile = (env.outFile || getAssetPath('application.js'));
-  var command = __dirname + '/../../node_modules/browserbuild/bin/browserbuild ' +
+
+  var files = glob.sync(root + '/**/*.js', {});
+  var command = 'node ' + __dirname + '/../../node_modules/browserbuild/bin/browserbuild ' +
                 "-m index -g App -b " + root +
-                "/ `find -L "+ root + " -name '*.js'`" +
+                "/ " + files.join(' ') + 
                 " > "+outFile;
   exec(command, function (error, stdout, stderr) {
     message.fileCreated(outFile);
