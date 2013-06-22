@@ -8,7 +8,7 @@ module.exports = function(source, savePath, callback) {
   getTemplates(source, function(templates) {
     compile(templates, function(src) {
       var locals = { templates: templates };
-      fs.writeTemplate('precompile', 'templates.js', locals, savePath, true);
+      fs.writeTemplate('precompile', 'templates.js', locals, savePath, 'force');
       callback();
     });
   });
