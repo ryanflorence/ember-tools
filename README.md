@@ -7,6 +7,8 @@ Ember Tools
 
 `npm install -g ember-tools`
 
+Don't have node or npm? Visit http://nodejs.org.
+
 ## Features
 
 - prescribed file organization for sanity
@@ -18,12 +20,12 @@ Ember Tools
 
 ## Version Information
 
-**Current Version: 0.2.0**
+**Current Version: 0.2.1**
 
 Package versions:
 
 - ember v1.0.0-RC.5
-- ember-data revision 12
+- ember-data revision 11
 - handlebars v1.0.0-rc.4
 - jQuery 1.9.1
 
@@ -198,6 +200,33 @@ a bunch of templates found at `views/jst` to
 
 This will register each template on `Ember.TEMPLATES` with file paths
 for keys.
+
+## Upgrading from 0.1.x to 0.2.x
+
+1. Rename `.ember` to `ember.json`
+2. Edit `ember.json` to point to the right `jsPath`, should look
+   something like:
+    ```js
+    {
+      "jsPath": "js",
+      "modules": "cjs"
+    }
+    ```
+3. Move `routes.js`, `app.js`, and `store.js` to `config/<filename>.js`
+4. Add dependencies to `config/app.js`, it should look something like this:
+   ```js
+   require('../vendor/jquery');
+   require('../vendor/handlebars');
+   require('../vendor/ember');
+   require('../vendor/ember-data');
+
+   var App = Ember.Application.create();
+   App.Store = require('./store');
+
+   module.exports = App;
+   ```
+
+That should do it.
 
 ## License and Copyright
 
