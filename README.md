@@ -20,7 +20,7 @@ Don't have node or npm? Visit http://nodejs.org.
 
 ## Version Information
 
-**Current Version: 0.2.1**
+**Current Version: 0.2.2**
 
 Package versions:
 
