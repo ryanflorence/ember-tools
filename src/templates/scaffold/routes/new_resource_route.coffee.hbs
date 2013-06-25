@@ -1,0 +1,13 @@
+{{modelName}} = require '{{modelPath}}'
+
+{{objectName}} = Ember.Route.extend
+
+  renderTemplate: ->
+    @render "{{editRoute}}", controller: '{{controller'}}
+
+  model: ->
+    {{modelName}}.createRecord()
+
+  deactivate: ->
+    model = @get("controller.model")
+    model.deleteRecord()  unless model.get("isSaving")

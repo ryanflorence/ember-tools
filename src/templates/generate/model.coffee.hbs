@@ -1,0 +1,6 @@
+{{objectName}} = DS.Model.extend
+{{#each fields}}
+  {{name}}: DS.attr('{{type}}')
+{{/each}}
+
+module.exports = {{objectName}}

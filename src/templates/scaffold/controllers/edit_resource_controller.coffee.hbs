@@ -1,0 +1,13 @@
+{{objectName}} = Ember.ObjectController.extend
+
+  save: ->
+    @get('store').commit()
+    @redirectToModel()
+
+  redirectToModel: ->
+    var router = @get 'target'
+    var model = @get 'model'
+    router.transitionTo '{{modelRoute}}', model
+
+module.exports = {{objectName}}
+

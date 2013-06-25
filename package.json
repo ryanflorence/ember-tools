@@ -21,6 +21,9 @@
     "rimraf": "*",
     "testem": "*"
   },
+  "peerDependencies": {
+    "emblem": "0.2.x"
+  },
   "scripts": {
     "test": "node_modules/.bin/mocha --require should --reporter dot --ui bdd --growl $(find test -name \"*.spec.js\")",
     "browser": "./bin/ember create test-app && cd test-app && ../bin/ember build && cd .. && testem ci -f test/testem.json"

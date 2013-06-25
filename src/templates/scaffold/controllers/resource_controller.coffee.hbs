@@ -1,0 +1,10 @@
+{{objectName}} = Ember.ObjectController.extend
+
+  destroy: ->
+    return unless confirm 'Are you sure?'
+    @get('model').deleteRecord()
+    @get('store').commit()
+    @get('target.router').transitionTo('{{resourcesRoute}}')
+
+module.exports = {{objectName}}
+

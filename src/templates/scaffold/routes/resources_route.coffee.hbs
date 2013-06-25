@@ -1,0 +1,9 @@
+{{modelName}} = require '{{modelPath}}'
+
+{{objectName}} = Ember.Route.extend
+
+  model: ->
+    {{modelName}}.find();
+
+module.exports = {{objectName}}
+
