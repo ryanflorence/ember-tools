@@ -19,11 +19,14 @@
     "mocha": "*",
     "should": "*",
     "rimraf": "*",
-    "testem": "*"
+    "testem": "*",
+    "request": "~2.21.0"
   },
   "scripts": {
     "test": "node_modules/.bin/mocha --require should --reporter dot --ui bdd --growl $(find test -name \"*.spec.js\")",
     "browser": "./bin/ember create test-app && cd test-app && ../bin/ember build && cd .. && testem ci -f test/testem.json"
   },
-  "engines": { "node" : ">=0.8.16" }
+  "engines": {
+    "node": ">=0.8.16"
+  }
 }

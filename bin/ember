@@ -3,6 +3,7 @@ var program = require('commander');
 var create = require('../src/commands/create');
 var build = require('../src/commands/build');
 var generate = require('../src/commands/generate');
+var update = require('../src/commands/update');
 var precompile = require('../src/commands/precompile');
 //var message = require('../src/util/message');
 
@@ -23,7 +24,7 @@ program
   .usage(' ')
   .action(build)
   .option('-c, --no-cleanup', "don't cleanup intermediate build files")
-  .option('-o, --out-file [path]', 'the file to save the build to, defaults to application.js')
+  .option('-o, --out-file [path]', 'the file to save the build to, defaults to application.js');
 
 program
   .command('generate')
@@ -50,6 +51,13 @@ program
   .option('-d, --directory [directory]', 'source template directory')
   .option('-f, --file [file]', 'output file');
 
+program
+  .command('update [version]')
+  .description("Update ember.js from ember's s3 build service to [version].\n"+
+                 "\t\t\t   Versions are latest(built from master, bleeding edge) and " +
+                 "stable.\n" +
+                 "\t\t\t   Default version is stable.\n")
+  .action(update);
 
 program.parse(process.argv);
 
