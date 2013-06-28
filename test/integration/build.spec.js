@@ -36,6 +36,7 @@ function assertFilesMatch(a, b) {
 }
 
 describe("build", function() {
+  this.timeout(10000);
 
   beforeEach(create);
 

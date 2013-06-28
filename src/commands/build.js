@@ -59,9 +59,8 @@ function build(env, cb) {
   var outFile = (env.outFile || getAssetPath('application.js'));
 
   var files = glob.sync(root + '/**/*.js', {});
-  var command = 'node ' + __dirname + '/../../node_modules/browserbuild/bin/browserbuild ' +
-                "-m index -g App -b " + root +
-                "/ " + files.join(' ') + 
+  var command = 'node ' + __dirname + '/../../node_modules/browserify/bin/cmd '+
+                "-d -e " + root + '/index' +
                 " > "+outFile;
   exec(command, function (error, stdout, stderr) {
     message.fileCreated(outFile);
