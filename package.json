@@ -13,14 +13,14 @@
     "fleck": "0.5.1",
     "browserify": "2.x",
     "fs-extra": "0.5.0",
-    "glob": "3.2.1"
+    "glob": "3.2.1",
+    "request": "~2.21.0"
   },
   "devDependencies": {
     "mocha": "*",
     "should": "*",
     "rimraf": "*",
-    "testem": "*",
-    "request": "~2.21.0"
+    "testem": "*"
   },
   "scripts": {
     "test": "node_modules/.bin/mocha --require should --reporter dot --ui bdd --growl $(find test -name \"*.spec.js\")",
