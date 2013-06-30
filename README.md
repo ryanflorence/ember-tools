@@ -16,11 +16,11 @@ Don't have node or npm? Visit http://nodejs.org.
 - template precompilation for performance
 - single file application build for convenience
 - generators for faster application development
-- commonjs (node) style modules for js community &lt;3 and isolated testing
+- commonjs (node-style) modules
 
 ## Version Information
 
-**Current Version: 0.2.2**
+**Current Version: 0.2.3**
 
 Package versions:
 
@@ -58,10 +58,14 @@ usage information.
 
   Commands:
 
-    create                 creates a new ember application
-    build                  compiles templates and builds the app
+    create [options]       creates a new ember application at [dir]
+    build [options]        compiles templates and builds the app
     generate [options]     generates application files
     precompile [options]   precompile templates from src dir to target dir
+    update [version]       Update ember.js from ember's s3 build service to [version].
+    			   Versions are latest(built from master, bleeding edge) and stable.
+    			   Default version is stable.
+    
 
   Options:
 
