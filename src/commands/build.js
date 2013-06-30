@@ -55,15 +55,21 @@ function createIndex(cb) {
 }
 
 function build(env, cb) {
+  var now = Date.now();
   var root = config().jsPath;
   var outFile = (env.outFile || getAssetPath('application.js'));
-
-  var files = glob.sync(root + '/**/*.js', {});
-  var command = 'node ' + __dirname + '/../../node_modules/browserify/bin/cmd '+
-                "-d -e " + root + '/index' +
-                " > "+outFile;
-  exec(command, function (error, stdout, stderr) {
+  var command = [
+    'node', __dirname + '/../../node_modules/browserify/bin/cmd',
+    '--noparse='+root+'/vendor/ember.js',
+    '--noparse='+root+'/vendor/jquery.js',
+    '--noparse='+root+'/vendor/ember-data.js',
+    '--noparse='+root+'/templates.js',
+    '-e', root+'/index', '>', outFile
+  ];
+  if (env.debug) command.splice(2, 0, '-d');
+  exec(command.join(' '), function (error, stdout, stderr) {
     message.fileCreated(outFile);
+    message.notify('build time: '+(Date.now() - now)+' ms');
     console.log(stdout, stderr);
     if (error) throw new Error(error);
     cb();

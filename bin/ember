@@ -24,7 +24,8 @@ program
   .usage(' ')
   .action(build)
   .option('-c, --no-cleanup', "don't cleanup intermediate build files")
-  .option('-o, --out-file [path]', 'the file to save the build to, defaults to application.js');
+  .option('-o, --out-file [path]', 'the file to save the build to, defaults to application.js')
+  .option('-d, --debug', 'includes source maps in application.js');
 
 program
   .command('generate')
