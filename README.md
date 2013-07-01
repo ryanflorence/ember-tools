@@ -1,6 +1,8 @@
 Ember Tools
 -----------
 
+[![Build Status](https://travis-ci.org/rpflorence/ember-tools.png)](https://travis-ci.org/rpflorence/ember-tools)
+
 ![demo](http://cl.ly/image/2G0x323u150m/ember.gif)
 
 ## Installation
