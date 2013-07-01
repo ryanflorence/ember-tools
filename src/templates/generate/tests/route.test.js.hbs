@@ -1,0 +1,14 @@
+var {{objectName}} = require('{{modulePath}}');
+
+var route;
+
+QUnit.module('{{objectName}}', {
+  setup: function() {
+    route = {{objectName}}.create();
+  }
+});
+
+test('it is a route', function() {
+  ok(route instanceof Ember.Route, 'it is a route');
+});
+

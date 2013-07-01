@@ -1,0 +1,16 @@
+var helpers = require('{{helpersPath}}');
+var {{objectName}} = require('{{modulePath}}');
+
+var model, store;
+
+QUnit.module('{{objectName}}', {
+  setup: function() {
+    store = helpers.createStore();
+    model = store.createRecord({{objectName}});
+  }
+});
+
+test('it is a model', function() {
+  ok(model instanceof DS.Model, 'it is a model');
+});
+

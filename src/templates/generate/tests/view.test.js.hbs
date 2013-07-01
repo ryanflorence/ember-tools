@@ -1,0 +1,14 @@
+var {{objectName}} = require('{{modulePath}}');
+
+var view;
+
+QUnit.module('{{objectName}}', {
+  setup: function() {
+    view = {{objectName}}.create();
+  }
+});
+
+test('it is a view', function() {
+  ok(view instanceof Ember.View, 'it is a view');
+});
+

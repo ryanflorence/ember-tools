@@ -37,6 +37,10 @@ function mkdirs(paths) {
   appDirs.forEach(function(dir) {
     fs.mkdirpSync(paths.js+'/'+dir);
   });
+  fs.mkdirpSync(paths.js+'/tests');
+  fs.mkdirpSync(paths.js+'/tests/support');
+  fs.mkdirpSync(paths.js+'/tests/unit');
+  fs.mkdirpSync(paths.js+'/tests/integration');
 }
 
 function writeConfigFile(paths) {
@@ -55,8 +59,15 @@ function writeFiles(paths) {
     var savePath = paths.js+'/'+file;
     fs.writeTemplate('create', file, {}, savePath);
   });
-  var locals = {jsPath: paths.jsRelative};
+  var locals = {jsPath: paths.js};
   fs.writeTemplate('create', 'index.html', locals, paths.app+'/index.html');
+  fs.writeTemplate('create', 'tests/support/vendor.js', {}, paths.js+'/tests/support/vendor.js');
+  fs.writeTemplate('create', 'tests/support/helpers.js', {}, paths.js+'/tests/support/helpers.js');
+  fs.writeTemplate(
+    'create', 'tests/support/testem.json',
+    {jsPath: paths.jsRelative},
+    paths.js+'/tests/support/testem.json'
+  );
 }
 
 function copyVendor(paths) {

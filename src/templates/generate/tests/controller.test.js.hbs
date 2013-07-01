@@ -1,0 +1,14 @@
+var {{objectName}} = require('{{modulePath}}');
+
+var controller;
+
+QUnit.module('{{objectName}}', {
+  setup: function() {
+    controller = {{objectName}}.create();
+  }
+});
+
+test('it is a controller', function() {
+  ok(controller instanceof Ember.{{controllerType}}Controller, 'it is a controller');
+});
+

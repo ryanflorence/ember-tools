@@ -40,6 +40,15 @@ fs.writeGenerator = function(generatorType, resourceName, locals) {
   var pluralType = inflector.pluralize(generatorType);
   var savePath = config().jsPath+'/'+pluralType+'/'+resourceName+ext;
   fs.writeTemplate('generate', generatorType+ext, locals, savePath);
+  if (ext == '.js') {
+    var testSavePath = config().jsPath+'/tests/unit/'+pluralType+'/'+resourceName+'.test.js';
+    var relativePath = resourceName.split('/').reduce(function(result) {
+      return '../'+result;
+    }, '../../');
+    locals.modulePath = relativePath+pluralType+'/'+resourceName;
+    locals.helpersPath = relativePath+'tests/support/helpers';
+    fs.writeTemplate('generate', 'tests/'+generatorType+'.test.js', locals, testSavePath);
+  }
 };
 
 fs.renderTemplate = function(templatePath, locals) {
@@ -47,4 +56,8 @@ fs.renderTemplate = function(templatePath, locals) {
   var compiled = handlebars.compile(template);
   return compiled(locals);
 };
+
+function filenameDepth(str) {
+  return str.split('/').length - 1;
+}
 

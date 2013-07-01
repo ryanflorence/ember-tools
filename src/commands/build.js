@@ -8,6 +8,7 @@ var inflector = require('../util/inflector');
 var walk = require('walk').walkSync;
 var precompile = require('../util/precompile');
 var config = require('../util/config');
+var buildTest = require('./test');
 
 module.exports = function(env) {
   precompileTemplates(function() {
@@ -72,7 +73,8 @@ function build(env, cb) {
     message.notify('build time: '+(Date.now() - now)+' ms');
     console.log(stdout, stderr);
     if (error) throw new Error(error);
-    cb();
+    env.buildOnly = true;
+    buildTest(env, cb);
   });
 }
 

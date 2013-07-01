@@ -5,6 +5,8 @@ var build = require('../src/commands/build');
 var generate = require('../src/commands/generate');
 var update = require('../src/commands/update');
 var precompile = require('../src/commands/precompile');
+var test = require('../src/commands/test');
+var watch = require('../src/commands/watch');
 //var message = require('../src/util/message');
 
 program
@@ -26,6 +28,16 @@ program
   .option('-c, --no-cleanup', "don't cleanup intermediate build files")
   .option('-o, --out-file [path]', 'the file to save the build to, defaults to application.js')
   .option('-d, --debug', 'includes source maps in application.js');
+
+program
+  .command('test')
+  .description('builds test runner and launches testem')
+  .option('-b, --build-only', "does not launch testem, only builds the test runner index file")
+  .action(test);
+
+program
+  .command('watch')
+  .action(watch);
 
 program
   .command('generate')

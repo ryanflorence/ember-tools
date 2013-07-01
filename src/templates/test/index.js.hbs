@@ -1,0 +1,5 @@
+require('./support/vendor');
+
+{{#each tests}}
+require('{{this}}');{{/each}}
+

@@ -1,0 +1,17 @@
+var serializer = exports.serializer = DS.JSONSerializer.create({
+  primaryKey: function() {
+    return 'id';
+  }
+});
+
+var Adapter = exports.Adapter = DS.Adapter.extend({
+  serializer: serializer
+});
+
+exports.createStore = function() {
+  return DS.Store.create({
+    revision: 11,
+    adapter: Adapter.create()
+  });
+};
+

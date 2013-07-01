@@ -1,0 +1,14 @@
+var {{objectName}} = require('{{modulePath}}');
+
+var mixed;
+
+QUnit.module('{{objectName}}', {
+  setup: function() {
+    mixed = Ember.Object.createWithMixins({{objectName}});
+  }
+});
+
+test('the truth', function() {
+  ok(true);
+});
+
