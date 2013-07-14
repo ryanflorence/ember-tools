@@ -67,8 +67,7 @@ usage information.
     update [version]       Update ember.js from ember's s3 build service to [version].
     			   Versions are latest(built from master, bleeding edge) and stable.
     			   Default version is stable.
-    
-
+    watch                  rebuild project when files change.
   Options:
 
     -h, --help     output usage information
@@ -142,10 +141,9 @@ it somewhere other than the default path.
 
 ### Building on File Changes
 
-I like to use the `fs-monitor` npm module with this command to ignore
-the intermediate files created by the build step:
+From the root of your project(where the ember.json file is located):
 
-`fsmonitor -p -d path/to/js '!index.js' '!templates.js' '!application.js' ember build`
+`ember watch`
 
 ### Scaffolding
 

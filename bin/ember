@@ -5,6 +5,7 @@ var build = require('../src/commands/build');
 var generate = require('../src/commands/generate');
 var update = require('../src/commands/update');
 var precompile = require('../src/commands/precompile');
+var watch = require('../src/commands/watch');
 //var message = require('../src/util/message');
 
 program
@@ -59,6 +60,11 @@ program
                  "stable.\n" +
                  "\t\t\t   Default version is stable.\n")
   .action(update);
+
+program
+  .command('watch')
+  .description('rebuild project when files change.')
+  .action(watch);
 
 program.parse(process.argv);
 
