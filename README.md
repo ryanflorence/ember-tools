@@ -22,7 +22,7 @@ Don't have node or npm? Visit http://nodejs.org.
 
 ## Version Information
 
-**Current Version: 0.2.4**
+**Current Version: 0.2.5**
 
 Package versions:
 

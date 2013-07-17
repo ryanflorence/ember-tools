@@ -9,7 +9,7 @@ var watch = require('../src/commands/watch');
 //var message = require('../src/util/message');
 
 program
-  .version('0.2.4')
+  .version('0.2.5')
   .usage("[command] [options]\n\n  Command-Specific Help\n\n    ember [command] --help");
 
 program
