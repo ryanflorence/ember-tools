@@ -65,8 +65,8 @@ usage information.
     generate [options]     generates application files
     precompile [options]   precompile templates from src dir to target dir
     update [version]       Update ember.js from ember's s3 build service to [version].
-    			   Versions are latest(built from master, bleeding edge) and stable.
-    			   Default version is stable.
+             Versions are latest(built from master, bleeding edge) and stable.
+             Default version is stable.
     watch                  rebuild project when files change.
   Options:
 
@@ -186,12 +186,14 @@ create.
 | `--route, -r taco_cart` | `TacoCartRoute` | `routes/taco_cart.js` |
 | `--mixin, -x tacoable` | `Tacoable` | `mixins/tacoable.js` |
 | `--helper, -l all_caps` | `allCaps` | `helpers/all_caps.js` |
+| `--component, -p my-widget` | `MyWidgetComponent` | `components/my_widget_component.js` <br>`templates/components/my-widget.hbs` |
 | `-mvcrt tacos` | `Taco` <br>`TacosView` <br>`TacosController` <br>`TacosRoute` | `models/taco.js` <br>`views/tacos_view` <br>`controllers/tacos_controller.js` <br>`routes/taco_route.js` <br>`templates/tacos.handlebars`|
 
 _Notes:_
 
 - Models will always be singular.
 - Sub-directories will be created for you if they don't exist.
+- Components must have a dash per web component standards.
 
 ### Precompiling Handlebars Templates for Ember
 
