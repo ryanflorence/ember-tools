@@ -42,6 +42,14 @@ fs.writeGenerator = function(generatorType, resourceName, locals) {
   fs.writeTemplate('generate', generatorType+ext, locals, savePath);
 };
 
+fs.writeComponentTemplate = function(resourceName, locals) {
+  templateName = resourceName+'.hbs';
+  var savePath = config().jsPath+'/templates/'+templateName;
+  var templatePath = __dirname+'/../templates/generate/component_template.hbs.hbs';
+  var src = fs.renderTemplate(templatePath, locals);
+  fs.writeFileSync(savePath, src);
+};
+
 fs.renderTemplate = function(templatePath, locals) {
   var template = fs.readFileSync(templatePath).toString();
   var compiled = handlebars.compile(template);

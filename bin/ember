@@ -35,6 +35,7 @@ program
   .action(function() {
     generate.apply(null, arguments);
   })
+  .option('-p, --component [name]',         'generates a component')
   .option('-c, --controller [name]',        'generates a controller')
   .option('-l, --helper [name]',            'generates a handlebars helper')
   .option('-x, --mixin [name]',             'generates a mixin')

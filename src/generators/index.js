@@ -1,5 +1,6 @@
 exports.model = require('./model');
 exports.view = require('./view');
+exports.component = require('./component');
 exports.controller = require('./controller');
 exports.template = require('./template');
 exports.route = require('./route');
