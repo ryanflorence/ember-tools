@@ -111,7 +111,7 @@ ember create --js-path public/javascripts
 - javascript assets created in `my-server-app/public/javascripts`
 - ember commands run from `my-server-app` root
 
-Running `ember-build` will create a file at
+Running `ember build` will create a file at
 `public/javascripts/application.js`. Require that in your server-app's
 template, no other files are required.
 
