@@ -5,13 +5,7 @@ var msg = require('../util/message');
 module.exports = function(resource) {
   var resourceName = inflector.underscore(inflector.singularize(resource));
   fs.writeGenerator('mixin', resourceName, {
-    objectName: inflector.objectify(resourceName),
-    mixinType: promptMixinType()
+    objectName: inflector.objectify(resourceName)
   });
 };
-
-function promptMixinType() {
-  var isControllerMixin = msg.confirm('Is this a controller mixin?');
-  return isControllerMixin ? 'Controller' : '';
-}
 
