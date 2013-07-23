@@ -22,7 +22,7 @@ Don't have node or npm? Visit http://nodejs.org.
 
 ## Version Information
 
-**Current Version: 0.2.5**
+**Current Version: 0.2.6**
 
 Package versions:
 
@@ -180,10 +180,10 @@ create.
 | options | object name | file |
 | --------|-------------|------|
 | `--model, -m burrito` | `Burrito` | `models/burrito.js` |
-| `--view, -v burrito` | `BurritoView` | `views/burrito.js` |
-| `--controller, -c post/comments` | `PostCommentsController` | `controllers/post/comments.js` |
+| `--view, -v burrito` | `BurritoView` | `views/burrito_view.js` |
+| `--controller, -c post/comments` | `PostCommentsController` | `controllers/post/comments_controller.js` |
 | `--template, -t post/comments` | n/a | `templates/post/comments.handlebars` |
-| `--route, -r taco_cart` | `TacoCartRoute` | `routes/taco_cart.js` |
+| `--route, -r taco_cart` | `TacoCartRoute` | `routes/taco_cart_route.js` |
 | `--mixin, -x tacoable` | `Tacoable` | `mixins/tacoable.js` |
 | `--helper, -l all_caps` | `allCaps` | `helpers/all_caps.js` |
 | `--component, -p my-widget` | `MyWidgetComponent` | `components/my_widget_component.js` <br>`templates/components/my-widget.hbs` |

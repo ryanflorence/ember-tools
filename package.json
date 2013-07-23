@@ -1,6 +1,6 @@
 {
   "name": "ember-tools",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "bin": {
     "ember": "./bin/ember"
   },
