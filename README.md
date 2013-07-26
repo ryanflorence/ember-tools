@@ -26,7 +26,7 @@ Don't have node or npm? Visit http://nodejs.org.
 
 Package versions:
 
-- ember v1.0.0-RC.6
+- ember v1.0.0-RC.6.1
 - ember-data revision 11
 - handlebars v1.0.0-rc.4
 - jQuery 1.9.1
