@@ -8,8 +8,14 @@ var inflector = require('../util/inflector');
 var walk = require('walk').walkSync;
 var precompile = require('../util/precompile');
 var config = require('../util/config');
+var fsmonitor          = require('fsmonitor');
+var RelPathList        = require('pathspec').RelPathList;
 
 module.exports = function(env) {
+  env.watch ? watchBuild(env) : singleBuild(env);
+};
+
+function singleBuild(env){
   precompileTemplates(function() {
     createIndex(function() {
       build(env, function() {
@@ -17,7 +23,25 @@ module.exports = function(env) {
       });
     });
   });
-};
+}
+
+var PATHS = RelPathList.parse(
+  [
+    '*.js',
+    '*.hbs',
+    '!application.js',
+    '!index.js',
+    '!templates.js'
+  ]
+);
+
+function watchBuild(env){
+  var jsPath = process.cwd() + '/' + config().jsPath;
+  fsmonitor.watch(jsPath, PATHS, function(change){
+    message.notify('Change detected: ' + change.toString());
+    singleBuild(env);
+  });
+}
 
 function precompileTemplates(cb) {
   precompile(getAssetPath('templates'), getAssetPath('templates.js'), cb);
