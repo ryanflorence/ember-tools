@@ -8,8 +8,15 @@ var inflector = require('../util/inflector');
 var walk = require('walk').walkSync;
 var precompile = require('../util/precompile');
 var config = require('../util/config');
+var fsmonitor          = require('fsmonitor');
+var RelPathList        = require('pathspec').RelPathList;
+var color = require('cli-color');
 
 module.exports = function(env) {
+  env.watch ? watchBuild(env) : singleBuild(env);
+};
+
+function singleBuild(env){
   precompileTemplates(function() {
     createIndex(function() {
       build(env, function() {
@@ -17,7 +24,26 @@ module.exports = function(env) {
       });
     });
   });
-};
+}
+
+var PATHS = RelPathList.parse(
+  [
+    '*.js',
+    '*.hbs',
+    '!application.js',
+    '!index.js',
+    '!templates.js'
+  ]
+);
+
+function watchBuild(env){
+  message.notify('Watching build...');
+  var jsPath = process.cwd() + '/' + config().jsPath;
+  fsmonitor.watch(jsPath, PATHS, function(change){
+    message.notify('Change detected: ' + change.toString().trim());
+    singleBuild(env);
+  });
+}
 
 function precompileTemplates(cb) {
   precompile(getAssetPath('templates'), getAssetPath('templates.js'), cb);
@@ -69,9 +95,10 @@ function build(env, cb) {
   if (env.debug) command.splice(2, 0, '-d');
   exec(command.join(' '), function (error, stdout, stderr) {
     message.fileCreated(outFile);
-    message.notify('build time: '+(Date.now() - now)+' ms');
-    console.log(stdout, stderr);
-    if (error) throw new Error(error);
+    message.notify('Build time: '+(Date.now() - now)+' ms');
+    if(stdout) console.log(stdout.trim());
+    if(stderr) console.log(color.red(stderr.trim()));
+    if (error && !env.watch) throw new Error(error);
     cb();
   });
 }
