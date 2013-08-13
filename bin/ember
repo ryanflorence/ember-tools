@@ -5,7 +5,6 @@ var build = require('../src/commands/build');
 var generate = require('../src/commands/generate');
 var update = require('../src/commands/update');
 var precompile = require('../src/commands/precompile');
-var watch = require('../src/commands/watch');
 //var message = require('../src/util/message');
 
 program
@@ -26,7 +25,8 @@ program
   .action(build)
   .option('-c, --no-cleanup', "don't cleanup intermediate build files")
   .option('-o, --out-file [path]', 'the file to save the build to, defaults to application.js')
-  .option('-d, --debug', 'includes source maps in application.js');
+  .option('-d, --debug', 'includes source maps in application.js')
+  .option('-w, --watch', 'rebuild project when files change');
 
 program
   .command('generate')
@@ -61,11 +61,6 @@ program
                  "stable.\n" +
                  "\t\t\t   Default version is stable.\n")
   .action(update);
-
-program
-  .command('watch')
-  .description('rebuild project when files change.')
-  .action(watch);
 
 program.parse(process.argv);
 
