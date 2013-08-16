@@ -1,7 +1,7 @@
 
 Ember.TEMPLATES['application'] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
-this.compilerInfo = [3,'>= 1.0.0-rc.4'];
-helpers = helpers || Ember.Handlebars.helpers; data = data || {};
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   var buffer = '', stack1, stack2, hashTypes, hashContexts, options, self=this, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
 
 function program1(depth0,data) {
@@ -14,7 +14,7 @@ function program1(depth0,data) {
   hashTypes = {};
   hashContexts = {};
   options = {hash:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
-  stack2 = ((stack1 = helpers.linkTo),stack1 ? stack1.call(depth0, "index", options) : helperMissing.call(depth0, "linkTo", "index", options));
+  stack2 = ((stack1 = helpers.linkTo || depth0.linkTo),stack1 ? stack1.call(depth0, "index", options) : helperMissing.call(depth0, "linkTo", "index", options));
   if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
   data.buffer.push("</li>\n  </ul>\n</nav>\n\n");
   hashTypes = {};
@@ -26,8 +26,8 @@ function program1(depth0,data) {
 });
 
 Ember.TEMPLATES['index'] = Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
-this.compilerInfo = [3,'>= 1.0.0-rc.4'];
-helpers = helpers || Ember.Handlebars.helpers; data = data || {};
+this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
   
 
 
