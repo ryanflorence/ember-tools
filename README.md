@@ -22,13 +22,13 @@ Don't have node or npm? Visit http://nodejs.org.
 
 ## Version Information
 
-**Current Version: 0.2.6**
+**Current Version: 0.2.7**
 
 Package versions:
 
-- ember v1.0.0-RC.6.1
-- ember-data revision 11
-- handlebars v1.0.0-rc.4
+- ember v1.0.0-RC.7
+- ember-data v0.13
+- handlebars v1.0.0
 - jQuery 1.9.1
 
 ## Quickstart
@@ -67,7 +67,6 @@ usage information.
     update [version]       Update ember.js from ember's s3 build service to [version].
              Versions are latest(built from master, bleeding edge) and stable.
              Default version is stable.
-    watch                  rebuild project when files change.
   Options:
 
     -h, --help     output usage information
@@ -128,6 +127,10 @@ creating a file with the generate command. It will convert the file path
 to an object, ie: `controllers/recipe -> App.RecipeController`,
 `routes/recipes/index -> App.RecipesIndexRoute`.
 
+To build when files in your app change, use the `--watch` option:
+
+`ember build -w`
+
 If you want to inspect the objects being assigned to the `App` object
 you can build without cleanup using the `--no-cleanup, -c` option and
 then opening up the `index.js` file it creates:
@@ -139,11 +142,9 @@ it somewhere other than the default path.
 
 `ember build --out-file public/whatever.js`
 
-### Building on File Changes
+Of course, you can combine any of these options:
 
-From the root of your project(where the ember.json file is located):
-
-`ember watch`
+`ember build -wc --out-file public/whatever.js`
 
 ### Scaffolding
 

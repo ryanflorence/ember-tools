@@ -8,7 +8,7 @@ var precompile = require('../src/commands/precompile');
 var message = require('../src/util/message');
 
 program
-  .version('0.2.6')
+  .version('0.2.7')
   .usage("[command] [options]\n\n  Command-Specific Help\n\n    ember [command] --help");
 
 program
