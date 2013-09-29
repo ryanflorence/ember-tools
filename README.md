@@ -39,7 +39,9 @@ ember create my-app
 cd my-app
 ember generate --scaffold person name:string age:number
 ember build
-open index.html
+open index.html # Mac OS
+xdg-open index.html # Linux
+start index.html # Windows
 # visit #/people
 ```
 
