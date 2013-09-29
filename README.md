@@ -40,7 +40,6 @@ cd my-app
 ember generate --scaffold person name:string age:number
 ember build
 open index.html
-# visit #/people
 ```
 
 The first place to get started is configuring a route in
