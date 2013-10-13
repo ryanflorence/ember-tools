@@ -83,7 +83,7 @@ function createIndex(cb) {
 function build(env, cb) {
   var now = Date.now();
   var root = config().jsPath;
-  var outFile = (env.outFile || getAssetPath('application.js'));
+  var outFile = (env.outFile || config().output || getAssetPath('application.js'));
   var command = [
     'node', __dirname + '/../../node_modules/browserify/bin/cmd',
     '--noparse='+root+'/vendor/ember.js',
