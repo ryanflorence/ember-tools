@@ -11,6 +11,7 @@ var config = require('../util/config');
 var fsmonitor          = require('fsmonitor');
 var RelPathList        = require('pathspec').RelPathList;
 var color = require('cli-color');
+var path = require('path');
 
 module.exports = function(env) {
   env.watch ? watchBuild(env) : singleBuild(env);
@@ -84,6 +85,7 @@ function build(env, cb) {
   var now = Date.now();
   var root = config().jsPath;
   var outFile = (env.outFile || getAssetPath('application.js'));
+  var outDir = path.dirname(outFile);
   var command = [
     'node', __dirname + '/../../node_modules/browserify/bin/cmd',
     '--noparse='+root+'/vendor/ember.js',
@@ -92,6 +94,7 @@ function build(env, cb) {
     '--noparse='+root+'/templates.js',
     '-e', root+'/index', '>', outFile
   ];
+  if (!fs.existsSync(outDir)) fs.mkdirpSync(outDir);
   if (env.debug) command.splice(2, 0, '-d');
   exec(command.join(' '), function (error, stdout, stderr) {
     message.fileCreated(outFile);
