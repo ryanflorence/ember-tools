@@ -38,6 +38,7 @@ var PATHS = RelPathList.parse(
 );
 
 function watchBuild(env){
+  singleBuild(env);
   message.notify('Watching build...');
   var jsPath = process.cwd() + '/' + config().jsPath;
   fsmonitor.watch(jsPath, PATHS, function(change){
