@@ -1,64 +1,29 @@
-DS.LSSerializer = DS.JSONSerializer.extend({
-
-  addBelongsTo: function(data, record, key, association) {
-    data[key] = record.get(key + '.id');
-  },
-
-  addHasMany: function(data, record, key, association) {
-    data[key] = record.get(key).map(function(record) {
-      return record.get('id');
-    });
-  },
-
-  // extract expects a root key, we don't want to save all these keys to
-  // localStorage so we generate the root keys here
-  extract: function(loader, json, type, record) {
-    this._super(loader, this.rootJSON(json, type), type, record);
-  },
-
-  extractMany: function(loader, json, type, records) {
-    this._super(loader, this.rootJSON(json, type, 'pluralize'), type, records);
-  },
-
-  rootJSON: function(json, type, pluralize) {
-    var root = this.rootForType(type);
-    if (pluralize == 'pluralize') { root = this.pluralize(root); }
-    var rootedJSON = {};
-    rootedJSON[root] = json;
-    return rootedJSON;
-  }
-
-});
+/*global Ember*/
+/*global DS*/
+'use strict';
 
 DS.LSAdapter = DS.Adapter.extend(Ember.Evented, {
 
-  init: function() {
+  init: function () {
     this._loadData();
   },
 
-  generateIdForRecord: function() {
-    return Math.random().toString(32).slice(2).substr(0,5);
+  generateIdForRecord: function () {
+    return Math.random().toString(32).slice(2).substr(0, 5);
   },
 
-  serializer: DS.LSSerializer.create(),
-
-  find: function(store, type, id) {
+  find: function (store, type, id) {
     var namespace = this._namespaceForType(type);
-    this._async(function(){
-      var copy = Ember.copy(namespace.records[id]);
-      this.didFindRecord(store, type, copy, id);
-    });
+    return Ember.RSVP.resolve(Ember.copy(namespace.records[id]));
   },
 
-  findMany: function(store, type, ids) {
+  findMany: function (store, type, ids) {
     var namespace = this._namespaceForType(type);
-    this._async(function(){
-      var results = [];
-      for (var i = 0; i < ids.length; i++) {
-        results.push(Ember.copy(namespace.records[ids[i]]));
-      }
-      this.didFindMany(store, type, results);
-    });
+    var results = [];
+    for (var i = 0; i < ids.length; i++) {
+      results.push(Ember.copy(namespace.records[ids[i]]));
+    }
+    return Ember.RSVP.resolve(results);
   },
 
   // Supports queries that look like this:
@@ -75,15 +40,13 @@ DS.LSAdapter = DS.Adapter.extend(Ember.Evented, {
   //  match records with "complete: true" and the name "foo" or "bar"
   //
   //    { complete: true, name: /foo|bar/ }
-  findQuery: function(store, type, query, recordArray) {
+  findQuery: function (store, type, query, recordArray) {
     var namespace = this._namespaceForType(type);
-    this._async(function() {
-      var results = this.query(namespace.records, query);
-      this.didFindQuery(store, type, results, recordArray);
-    });
+    var results = this.query(namespace.records, query);
+    return Ember.RSVP.resolve(results);
   },
 
-  query: function(records, query) {
+  query: function (records, query) {
     var results = [];
     var id, record, property, test, push;
     for (id in records) {
@@ -91,7 +54,7 @@ DS.LSAdapter = DS.Adapter.extend(Ember.Evented, {
       for (property in query) {
         test = query[property];
         push = false;
-        if (Object.prototype.toString.call(test) == '[object RegExp]') {
+        if (Object.prototype.toString.call(test) === '[object RegExp]') {
           push = test.test(record[property]);
         } else {
           push = record[property] === test;
@@ -104,112 +67,62 @@ DS.LSAdapter = DS.Adapter.extend(Ember.Evented, {
     return results;
   },
 
-  findAll: function(store, type) {
+  findAll: function (store, type) {
     var namespace = this._namespaceForType(type);
-    this._async(function() {
-      var results = [];
-      for (var id in namespace.records) {
-        results.push(Ember.copy(namespace.records[id]));
-      }
-      this.didFindAll(store, type, results);
-    });
+    var results = [];
+    for (var id in namespace.records) {
+      results.push(Ember.copy(namespace.records[id]));
+    }
+    return Ember.RSVP.resolve(results);
   },
 
-  createRecords: function(store, type, records) {
+  createRecord: function (store, type, record) {
     var namespace = this._namespaceForType(type);
-    records.forEach(function(record) {
-      this._addRecordToNamespace(namespace, record);
-    }, this);
-    this._async(function() {
-      this._didSaveRecords(store, type, records);
-    });
+    this._addRecordToNamespace(namespace, record);
+    this._saveData();
+    return Ember.RSVP.resolve();
   },
 
-  updateRecords: function(store, type, records) {
+  updateRecord: function (store, type, record) {
     var namespace = this._namespaceForType(type);
-    this._async(function() {
-      records.forEach(function(record) {
-        var id = record.get('id');
-        namespace.records[id] = record.serialize({includeId:true});
-      }, this);
-      this._didSaveRecords(store, type, records);
-    });
+    var id = record.get('id');
+    namespace.records[id] = record.toJSON({ includeId: true });
+    this._saveData();
+    return Ember.RSVP.resolve();
   },
 
-  deleteRecords: function(store, type, records) {
+  deleteRecord: function (store, type, record) {
     var namespace = this._namespaceForType(type);
-    this._async(function() {
-      records.forEach(function(record) {
-        var id = record.get('id');
-        delete namespace.records[id];
-      });
-      this._didSaveRecords(store, type, records);
-    });
-
-  },
-
-  dirtyRecordsForHasManyChange: function(dirtySet, parent, relationship) {
-    dirtySet.add(parent);
-  },
-
-  dirtyRecordsForBelongsToChange: function(dirtySet, child, relationship) {
-    dirtySet.add(child);
+    var id = record.get('id');
+    delete namespace.records[id];
+    this._saveData();
+    return Ember.RSVP.resolve();
   },
 
   // private
 
-  _getNamespace: function() {
+  _getNamespace: function () {
     return this.namespace || 'DS.LSAdapter';
   },
 
-  _loadData: function() {
+  _loadData: function () {
     var storage = localStorage.getItem(this._getNamespace());
     this._data = storage ? JSON.parse(storage) : {};
   },
 
-  _didSaveRecords: function(store, type, records) {
-    var success = this._saveData();
-    if (success) {
-      store.didSaveRecords(records);
-    } else {
-      records.forEach(function(record) {
-        store.recordWasError(record);
-      });
-      this.trigger('QUOTA_EXCEEDED_ERR', records);
-    }
+  _saveData: function () {
+    localStorage.setItem(this._getNamespace(), JSON.stringify(this._data));
   },
 
-  _saveData: function() {
-    try {
-      localStorage.setItem(this._getNamespace(), JSON.stringify(this._data));
-      return true;
-    } catch(error) {
-      if (error.name == 'QUOTA_EXCEEDED_ERR') {
-        return false;
-      } else {
-        throw new Error(error);
-      }
-    }
-  },
-
-  _namespaceForType: function(type) {
+  _namespaceForType: function (type) {
     var namespace = type.url || type.toString();
     return this._data[namespace] || (
       this._data[namespace] = {records: {}}
     );
   },
 
-  _addRecordToNamespace: function(namespace, record) {
+  _addRecordToNamespace: function (namespace, record) {
     var data = record.serialize({includeId: true});
     namespace.records[data.id] = data;
-  },
-
-  _async: function(callback) {
-    var _this = this;
-    setTimeout(function(){
-      Ember.run(_this, callback);
-    }, 1);
   }
-
 });
-
