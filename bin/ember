@@ -59,11 +59,13 @@ program
   .option('-f, --file [file]', 'output file');
 
 program
-  .command('update [version]')
+  .command('update [version] [tag]')
   .description("Update ember.js from ember's s3 build service to [version].\n"+
-                 "\t\t\t   Versions are latest(built from master, bleeding edge) and " +
-                 "stable.\n" +
-                 "\t\t\t   Default version is stable.\n")
+                 "\t\t\t   Versions are (default version is release): \n" + 
+                 "\t\t\t    canary (daily build from master, bleeding edge) \n" +
+                 "\t\t\t    beta (weekly build of the beta branch) \n" +
+                 "\t\t\t    release (latest released version) \n" +
+                 "\t\t\t    tags (a tagged version as found on http://emberjs.com/builds/#/tagged) \n")
   .action(update);
 
 program.parse(process.argv);
