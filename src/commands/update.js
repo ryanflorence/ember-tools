@@ -11,7 +11,7 @@ module.exports = function(version, tag){
   if (version === 't' ) version = 'tags';
   if (version === 'tags') {
     if (!tag) {
-      msg.error('Please use "release", "beta" or "canary"');
+      msg.error('When updating by tags a version must be passed as well eg. v1.1.1');
       process.exit(1);
     }
   }
