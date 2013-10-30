@@ -14,8 +14,8 @@ function update(opts,done){
   });
 }
 
-function download(filename,callback){
-  return request.get('http://builds.emberjs.com/' + filename + '.js', callback);
+function download(path,callback){
+  return request.get('http://builds.emberjs.com/' + path + '/ember.js', callback);
 }
 
 describe('ember update', function(){
@@ -33,8 +33,8 @@ describe('ember update', function(){
   });
 
   it('can update to the latest stable from s3', function(done){
-    update('stable', function(){
-      download('ember-latest-stable',function(err,response,data){
+    update('release', function(){
+      download('release',function(err,response,data){
         if (err) return done(err);
         var file = fs.readFileSync(CWD + '/test-app/js/vendor/ember.js', 'utf8');
         file.should.equal(data);
@@ -43,9 +43,20 @@ describe('ember update', function(){
     });
   });
 
-  it('can update to the latest build from s3', function(done){
-    update('latest', function(){
-      download('ember-latest',function(err,response,data){
+  it('can update to the latest beta build from s3', function(done){
+    update('beta', function(){
+      download('beta',function(err,response,data){
+        if (err) return done(err);
+        var file = fs.readFileSync(CWD + '/test-app/js/vendor/ember.js', 'utf8');
+        file.should.equal(data);
+        done();
+      });
+    });
+  });
+
+  it('can update to the latest canary build from s3', function(done){
+    update('canary', function(){
+      download('canary',function(err,response,data){
         if (err) return done(err);
         var file = fs.readFileSync(CWD + '/test-app/js/vendor/ember.js', 'utf8');
         file.should.equal(data);
