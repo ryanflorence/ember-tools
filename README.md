@@ -1,131 +1,241 @@
 Ember Tools
 -----------
 
-![demo](http://i.imgur.com/LNfnYRO.gif)
+[![Build Status](https://travis-ci.org/rpflorence/ember-tools.png)](https://travis-ci.org/rpflorence/ember-tools)
 
-## Current Version: 0.0.2
-
-The cli is still rough around the edges. Next thing on my todo list is making the cli polished.
+![demo](http://cl.ly/image/2G0x323u150m/ember.gif)
 
 ## Installation
 
 `npm install -g ember-tools`
 
-## What's in the bag?
+Don't have node or npm? Visit http://nodejs.org.
 
-### Features
+## Features
 
 - prescribed file organization for sanity
 - scaffolding for learning curve mitigation
 - template precompilation for performance
 - single file application build for convenience
 - generators for faster application development
-- commonjs (node) style modules for js community <3 and isolated testing
+- commonjs (node-style) modules
 
-### Commands
+## Version Information
 
-- [`ember create [appDir]`](#ember-create-dir)
-- [`ember build`](#ember-build)
-- [`ember-generate --scaffold [resource]`](#ember-generate---scaffold-resource)
-- [`ember-generate [options] [resource]`](#ember-generate-options-resource)
-- [`ember-precompile --directory [directory] --file [file]`](#ember-generate---scaffold-resource)
+**Current Version: 0.2.7**
 
-### Current Library Versions
+Package versions:
 
-- ember 1.0.0.pre4
-- ember-data rev 11
-- handlebars 1.0.rc.2
-- jQuery 1.9.0
+- ember v1.0.0
+- ember-data v0.13
+- handlebars v1.0.0
+- jQuery 1.9.1
 
-## `ember create [dir]`
+## Quickstart
 
-Creates the directory at [dir] and shoves a boilerplate ember app into
-it. Also creates an `.ember` file in the current directory so `ember
-build` knows what directory to build.
-
-**IMPORTANT**: Your app must be a sub-directory of the app you create it
-from. I anticipate more information to be stored in the `.ember` file
-like CoffeeScript and AMD support, etc.
-
-_Example:_
-
-```sh
-ember create client
 ```
-
-## `ember build`
-
-Builds your app, handing you a fresh-from-the-oven `application.js` with
-everything inside.
-
-_Example:_
-
-```sh
+npm install -g ember-tools
+ember create my-app
+cd my-app
+ember generate --scaffold person name:string age:number
 ember build
+open index.html # Mac OS
+xdg-open index.html # Linux
+start index.html # Windows
+# visit #/people
 ```
 
-## `ember-generate --scaffold [resource]`
+The first place to get started is configuring a route in
+`config/routes.js` and then adding a template for the route.
 
-Creates fully functional CRUD.
+## Usage
 
-_Example:_
+You can always run `ember --help` or `ember [command] --help` to get
+usage information.
 
-`ember-generate --scaffold person name:string age:number`
+```
+  Usage: ember [command] [options]
 
-Visiting `/#people` will now present the user with a fully functional interface to create, edit, and destroy people models.
+  Command-Specific Help
 
-**NOTE:** It is important to give it the singular version of word.
+    ember [command] --help
 
-## `ember-generate [options] [resource]`
+  Commands:
 
-Generates boilerplate application modules. See also `ember-generate --scaffold`.
+    create [options]       creates a new ember application at [dir]
+    build [options]        compiles templates and builds the app
+    generate [options]     generates application files
+    precompile [options]   precompile templates from src dir to target dir
+    update [version]       Update ember.js from ember's s3 build service to [version].
+             Versions are latest(built from master, bleeding edge) and stable.
+             Default version is stable.
+  Options:
 
-Examples:
+    -h, --help     output usage information
+    -V, --version  output the version number
+```
 
-`ember-generate -m recipe`
+## Guide
+
+### Creating Stand-Alone Browser Apps
+
+If you are creating a stand-alone browser application (no server, or
+communication is through some api service) then use:
+
+`ember create my-app`
+
+- javascript assets created in `my-app/js`
+- ember commands run from `my-app` root
+
+Or if you already have the `my-app` directory, `cd` into it and call
+ember create bare:
+
+`ember create`
+
+- javascript assets created in `./js`
+- ember commands run from `./` root
+
+There is nothing magical about the `index.html` file. Feel free to
+replace it with your own (you probably should). Just make sure you
+include a script tag pointing to `js/application.js`
+
+### Creating Browser Apps as Part of Express or Rails (etc.)
+
+If you are creating an ember app as part of a server-side framework like
+express or ruby on rails use the `--js-path` option.
+
+```sh
+cd my-server-app
+ember create --js-path public/javascripts
+```
+
+- javascript assets created in `my-server-app/public/javascripts`
+- ember commands run from `my-server-app` root
+
+Running `ember build` will create a file at
+`public/javascripts/application.js`. Require that in your server-app's
+template, no other files are required.
+
+### Building Your App
+
+The build command pre-compiles all the templates to simple functions,
+assigns all your modules to the `App` object based on their file names,
+and then creates a single, concatenated file to be included in your app.
+
+`ember build`
+
+This build step makes adding new modules to your app as simple as
+creating a file with the generate command. It will convert the file path
+to an object, ie: `controllers/recipe -> App.RecipeController`,
+`routes/recipes/index -> App.RecipesIndexRoute`.
+
+To build when files in your app change, use the `--watch` option:
+
+`ember build -w`
+
+If you want to inspect the objects being assigned to the `App` object
+you can build without cleanup using the `--no-cleanup, -c` option and
+then opening up the `index.js` file it creates:
+
+`ember build -c`
+
+You can also specify the path of the resulting application file to save
+it somewhere other than the default path.
+
+`ember build --out-file public/whatever.js`
+
+Of course, you can combine any of these options:
+
+`ember build -wc --out-file public/whatever.js`
+
+### Scaffolding
+
+I am not super proud of the scaffolding, but it gets your feet wet with
+ember really quickly, so use it for fun, not profit :P
+
+`ember generate --scaffold time_sheet description:string minutes:number`
+
+### Generators
+
+Ember tools provides generators for the different ember objects your app
+will use. Basic usage is:
+
+`ember generate [options] [name]`
+
+So creating a recipe route would look like:
+
+`ember generate --route recipe`
+
+Or the shorter version:
+
+`ember generate -r recipe`
+
+If you have a route, you probably want a template too; you can combine
+generator options:
+
+`ember generate -rt recipe`
+
+Below is a list of all generator commands the the files and objects they
+create.
+
+### Generator Examples
 
 | options | object name | file |
 | --------|-------------|------|
 | `--model, -m burrito` | `Burrito` | `models/burrito.js` |
-| `--view, -v burrito` | `BurritoView` | `views/burrito.js` |
-| `--controller, -c post/comments` | `PostCommentsController` | `controllers/post/comments.js` |
+| `--view, -v burrito` | `BurritoView` | `views/burrito_view.js` |
+| `--controller, -c post/comments` | `PostCommentsController` | `controllers/post/comments_controller.js` |
 | `--template, -t post/comments` | n/a | `templates/post/comments.handlebars` |
-| `--route, -r taco_cart` | `TacoCartRoute` | `routes/taco_cart.js` |
+| `--route, -r taco_cart` | `TacoCartRoute` | `routes/taco_cart_route.js` |
+| `--mixin, -x tacoable` | `Tacoable` | `mixins/tacoable.js` |
+| `--helper, -l all_caps` | `allCaps` | `helpers/all_caps.js` |
+| `--component, -p my-widget` | `MyWidgetComponent` | `components/my_widget_component.js` <br>`templates/components/my-widget.hbs` |
 | `-mvcrt tacos` | `Taco` <br>`TacosView` <br>`TacosController` <br>`TacosRoute` | `models/taco.js` <br>`views/tacos_view` <br>`controllers/tacos_controller.js` <br>`routes/taco_route.js` <br>`templates/tacos.handlebars`|
 
 _Notes:_
 
 - Models will always be singular.
 - Sub-directories will be created for you if they don't exist.
-- Files will be overwritten **without warning**.
+- Components must have a dash per web component standards.
 
-## `ember-precompile --directory [dir] --file [file]`
+### Precompiling Handlebars Templates for Ember
 
-Precompiles templates found in `dir` into `file`.
+The build command already pre-compiles your templates, but you can use
+the precompile command outside of the rest of ember-tools. To precompile
+a bunch of templates found at `views/jst` to
+`assets/javascripts/templates.js` run this command:
 
-_Examples_
+`ember precompile -d views/jst -f assets/javascripts/templates.js`
 
-`ember-precompile --directory app/templates --file app/templates.js`
-`ember-precompile -d app/templates -f app/templates.js`
+This will register each template on `Ember.TEMPLATES` with file paths
+for keys.
 
+## Upgrading from 0.1.x to 0.2.x
 
-## Roadmap
+1. Rename `.ember` to `ember.json`
+2. Edit `ember.json` to point to the right `jsPath`, should look
+   something like:
+    ```js
+    {
+      "jsPath": "js",
+      "modules": "cjs"
+    }
+    ```
+3. Move `routes.js`, `app.js`, and `store.js` to `config/<filename>.js`
+4. Add dependencies to `config/app.js`, it should look something like this:
+   ```js
+   require('../vendor/jquery');
+   require('../vendor/handlebars');
+   require('../vendor/ember');
+   require('../vendor/ember-data');
 
-- clean up cli
-  - consolidate all commands into `ember`
-  - make help and usage information accurate and valuable 
-- create CONTRIBUTING file
-- moar tests
-- travis-ci
-- warn before overwriting a file
-- baked in testing
-- generated tests
-- support for custom application namespace (instead of just `App`)
-- emblem.js templates
-- coffeescript generators
-- AMD generators/build (maybe)
-- coffeescript + AMD generators! (maybe-er)
-- ES6 module generators/build EVEN THOUGH E'RBODY UP IN THEIR GRILL (maybeist)
+   var App = Ember.Application.create();
+   App.Store = require('./store');
+
+   module.exports = App;
+   ```
+
+That should do it.
 
 ## License and Copyright
 
@@ -135,12 +245,15 @@ Copyright &copy; 2013 [Ryan Florence](http://ryanflorence.com)
 
 ## Contributing
 
-Run tests with
+Run tests with:
 
 `npm test`
 
-Run tests and watch for changes with
+and the browser sanity tests:
 
-```bash
-npm run-script watch-test
-```
+`npm run-script browser`
+
+Its usually easiest to create a branch and send a pull request against that branch instead of master. Single commits are preferred (no big deal though, I can squash and cherry-pick).
+
+Thanks for using ember-tools!
+

@@ -10,7 +10,7 @@ var {{objectName}} = Ember.Route.extend({
     return {{modelName}}.createRecord();
   },
 
-  exit: function() {
+  deactivate: function() {
     var model = this.get('controller.model');
     if (!model.get('isSaving')) {
       model.deleteRecord();

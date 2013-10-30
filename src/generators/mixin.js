@@ -1,10 +1,10 @@
 var fs = require('../util/fs');
 var inflector = require('../util/inflector');
+var msg = require('../util/message');
 
-module.exports = function(resource, env) {
+module.exports = function(resource) {
   var resourceName = inflector.underscore(inflector.singularize(resource));
-  fs.writeGenerator('model', resourceName, {
-    fields: env.fields,
+  fs.writeGenerator('mixin', resourceName, {
     objectName: inflector.objectify(resourceName)
   });
 };

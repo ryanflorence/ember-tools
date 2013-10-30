@@ -1,8 +1,12 @@
 module.exports = [
+  'components',
+  'config',
   'controllers',
+  'helpers',
   'models',
   'routes',
   'templates',
-  'views'
+  'views',
+  'mixins'
 ];
 

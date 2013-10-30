@@ -1,13 +1,76 @@
 #!/usr/bin/env node
 var program = require('commander');
-var commands = require('../src/commands');
+var create = require('../src/commands/create');
+var build = require('../src/commands/build');
+var generate = require('../src/commands/generate');
+var update = require('../src/commands/update');
+var precompile = require('../src/commands/precompile');
 var message = require('../src/util/message');
 
-program.version('0.0.1').parse(process.argv);
+program
+  .version('0.2.7')
+  .usage("[command] [options]\n\n  Command-Specific Help\n\n    ember [command] --help");
 
-if (program.args[0]) {
-  var command = commands[program.args[0]];
-  message.error("'" + program.args[0] + "' is not an ember-tools command.", command);
-  command(program);
-}
+program
+  .command('create')
+  .description('creates a new ember application at [dir]')
+  .usage('[options] [dir]')
+  .option('-p, --js-path [path]', 'the directory place javascript assets, defaults to [dir]/js')
+  .action(create);
+
+program
+  .command('build')
+  .description('compiles templates and builds the app')
+  .usage(' ')
+  .action(build)
+  .option('-c, --no-cleanup', "don't cleanup intermediate build files")
+  .option('-o, --out-file [path]', 'the file to save the build to, defaults to application.js')
+  .option('-d, --debug', 'includes source maps in application.js')
+  .option('-w, --watch', 'rebuild project when files change');
+
+program.command('watch').action(function() {
+  message.notify("The 'watch' command has been deprecated. Please use `ember build --watch` instead.");
+});
+
+program
+  .command('generate')
+  .description('generates application files')
+  .usage("[options] [name]\n\n    [name]    the under_score name of your object\n    [fields]  field:type pairs, ex: 'name:string age:number broke:boolean'\n    [options] can be combined")
+  .action(function() {
+    generate.apply(null, arguments);
+  })
+  .option('-p, --component [name]',         'generates a component')
+  .option('-c, --controller [name]',        'generates a controller')
+  .option('-l, --helper [name]',            'generates a handlebars helper')
+  .option('-x, --mixin [name]',             'generates a mixin')
+  .option('-m, --model [name] [fields]',    'generates a model with optional [fields]')
+  .option('-r, --route [name]',             'generates a route')
+  .option('-s, --scaffold [name] [fields]', 'scaffolds full CRUD for a model')
+  .option('-t, --template [name]',          'generates a handlebars template')
+  .option('-v, --view [name]',              'generates a view');
+
+program
+  .command('precompile')
+  .description('precompile templates from src dir to target dir')
+  .action(function() {
+    precompile.apply(null, arguments);
+  })
+  .option('-d, --directory [directory]', 'source template directory')
+  .option('-f, --file [file]', 'output file');
+
+program
+  .command('update [version]')
+  .description("Update ember.js from ember's s3 build service to [version].\n"+
+                 "\t\t\t   Versions are latest(built from master, bleeding edge) and " +
+                 "stable.\n" +
+                 "\t\t\t   Default version is stable.\n")
+  .action(update);
+
+program.parse(process.argv);
+
+//if (program.args[0]) {
+  //var command = commands[program.args[0]];
+  //message.error("'" + program.args[0] + "' is not an ember-tools command.", command);
+  //command(program);
+//}
 
