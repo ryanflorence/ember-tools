@@ -43,3 +43,6 @@ exports.prompt = function(question) {
   return prompt().toLowerCase();
 };
 
+exports.silentMode = function() {
+    console.log(yellow("   WARNING:\t") + "Silent mode is enabled\n");
+};

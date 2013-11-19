@@ -47,7 +47,7 @@ fs.writeComponentTemplate = function(resourceName, locals) {
   var savePath = config().jsPath+'/templates/'+templateName;
   var templatePath = __dirname+'/../templates/generate/component_template.hbs.hbs';
   var src = fs.renderTemplate(templatePath, locals);
-  fs.writeFileSync(savePath, src);
+  fs.writeFileSync(savePath, src, locals.silent?'force':'');
 };
 
 fs.renderTemplate = function(templatePath, locals) {
