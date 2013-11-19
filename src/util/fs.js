@@ -39,7 +39,7 @@ fs.writeGenerator = function(generatorType, resourceName, locals) {
   var ext = (generatorType == 'template') ? '.hbs' : '.js';
   var pluralType = inflector.pluralize(generatorType);
   var savePath = config().jsPath+'/'+pluralType+'/'+resourceName+ext;
-  fs.writeTemplate('generate', generatorType+ext, locals, savePath);
+  fs.writeTemplate('generate', generatorType+ext, locals, savePath,locals.silent?'force':'');
 };
 
 fs.writeComponentTemplate = function(resourceName, locals) {
