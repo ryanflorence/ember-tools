@@ -75,6 +75,17 @@ usage information.
     -V, --version  output the version number
 ```
 
+### generate silently
+You can activate silent mode for the `ember generate` command. Just add a silent option to your `ember.json`. this file is located at your project root.
+
+    {
+      "jsPath": "js",
+      "modules": "cjs",
+      "silent": true
+    }
+
+This is can be very usefull when using integrated IDE command lines or Macro execution.
+
 ## Guide
 
 ### Creating Stand-Alone Browser Apps
