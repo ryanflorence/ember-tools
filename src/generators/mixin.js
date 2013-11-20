@@ -7,7 +7,7 @@ module.exports = function (resource) {
     var resourceName = inflector.underscore(inflector.singularize(resource));
     fs.writeGenerator('mixin', resourceName, {
         objectName: inflector.objectify(resourceName),
-        silent: config().silent
+        force: config().force
     });
 };
 

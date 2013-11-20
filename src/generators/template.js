@@ -4,6 +4,6 @@ var inflector = require('../util/inflector');
 
 module.exports = function(resource) {
   var resourceName = inflector.underscore(resource);
-  fs.writeGenerator('template', resourceName, {name: resource, silent: config().silent});
+  fs.writeGenerator('template', resourceName, {name: resource, force: config().force});
 };
 

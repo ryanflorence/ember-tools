@@ -7,7 +7,7 @@ module.exports = function (resource, env) {
     fs.writeGenerator('model', resourceName, {
         fields: env.fields,
         objectName: inflector.objectify(resourceName),
-        silent: config().silent
+        force: config().force
     });
 };
 

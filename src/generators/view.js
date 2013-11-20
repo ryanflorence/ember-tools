@@ -6,7 +6,7 @@ module.exports = function (resource) {
     var resourceName = inflector.underscore(resource) + '_view';
     fs.writeGenerator('view', resourceName, {
         objectName: inflector.objectify(resourceName),
-        silent: config().silent
+        force: config().force
     });
 };
 

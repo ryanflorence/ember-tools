@@ -7,8 +7,8 @@ module.exports = function(resource) {
   var resourceName = inflector.underscore(resource)+'_controller';
   fs.writeGenerator('controller', resourceName, {
     objectName: inflector.objectify(resourceName),
-    controllerType: config().silent?'':promptControllerType(),
-    silent: config().silent
+    controllerType: config().force?'':promptControllerType(),
+    force: config().force
   });
 };
 

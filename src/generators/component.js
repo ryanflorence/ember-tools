@@ -12,7 +12,7 @@ module.exports = function (resource) {
     var templateName = 'components/' + inflector.dasherize(resource);
     fs.writeGenerator('component', resourceName, {
         objectName: inflector.objectify(resourceName),
-        silent: config().silent
+        force: config().force
     });
-    fs.writeComponentTemplate(templateName,{silent: config().silent});
+    fs.writeComponentTemplate(templateName,{force: config().force});
 };

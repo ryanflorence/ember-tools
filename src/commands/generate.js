@@ -8,7 +8,7 @@ module.exports = function () {
     if (!env.resourceName) {
         msg.notify("Please provide a resource name. See 'ember generate --help'");
     } else {
-        if (config().silent) msg.silentMode();
+        if (config().force) msg.forceMode();
 
         for (var generator in generators) {
             if (env[generator]) {

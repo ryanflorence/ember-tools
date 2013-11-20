@@ -6,7 +6,7 @@ module.exports = function (resource) {
     var resourceName = inflector.underscore(resource) + '_route';
     fs.writeGenerator('route', resourceName, {
         objectName: inflector.objectify(resourceName),
-        silent: config().silent
+        force: config().force
     });
 };
 
