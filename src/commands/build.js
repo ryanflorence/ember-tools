@@ -58,7 +58,7 @@ function createIndex(cb) {
     var dirPath = getAssetPath(dirName);
     var walker = walk(dirPath);
     walker.on('file', function(dir, stats, next) {
-      if (stats.name.charAt(0) !== '.') {
+      if (stats.name.charAt(0) !== '.' && stats.name.match(/\.js$/)) {
         var path = unroot(dir+'/'+stats.name).replace(/\.js$/, '');
         if (dirName == 'helpers') {
           helpers.push({path: path});
