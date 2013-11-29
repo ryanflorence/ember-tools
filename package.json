@@ -1,32 +1,27 @@
 {
   "name": "ember-tools",
-  "version": "0.2.7",
+  "version": "0.3.0-alpha.1",
   "bin": {
     "ember": "./bin/ember"
   },
   "dependencies": {
-    "sync-prompt": "*",
-    "commander": "1.1.1",
-    "cli-color": "0.2.1",
-    "walk": "2.2.1",
-    "handlebars": "1.0.12",
-    "fleck": "0.5.1",
-    "browserify": "2.x",
-    "fs-extra": "0.5.0",
-    "glob": "3.2.1",
-    "request": "~2.21.0",
-    "fsmonitor": "~0.2.2",
-    "pathspec": "~0.9.2"
+    "commander": "1.1.1"
+  },
+  "peerDependencies": {
+    "loom": "~3.0.0",
+    "browserify": "~2.36.0"
   },
   "devDependencies": {
-    "mocha": "*",
-    "should": "*",
-    "rimraf": "*",
-    "testem": "*"
+    "grunt": "~0.4.2",
+    "grunt-browserify": "~1.2.11",
+    "matchdep": "~0.3.0",
+    "grunt-ember-templates": "~0.4.17",
+    "grunt-contrib-clean": "~0.5.0",
+    "loom-generators-ember": "0.0.3",
+    "grunt-contrib-watch": "~0.5.3"
   },
   "scripts": {
-    "test": "node_modules/.bin/mocha --require should --reporter dot --ui bdd --growl $(find test -name \"*.spec.js\")",
-    "browser": "./bin/ember create test-app && cd test-app && ../bin/ember build && cd .. && testem ci -f test/testem.json"
+    "test": "node_modules/.bin/testem --require should --reporter dot --ui bdd --growl $(find test -name \"*.spec.js\")"
   },
   "engines": {
     "node": ">=0.8.16"
