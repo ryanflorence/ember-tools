@@ -1,6 +1,9 @@
 Ember Tools
 -----------
 
+**NOTICE**: ember-tools has been rewritten, follow development on the
+[loom branch](https://github.com/rpflorence/ember-tools/tree/loom)
+
 [![Build Status](https://travis-ci.org/rpflorence/ember-tools.png)](https://travis-ci.org/rpflorence/ember-tools)
 
 ![demo](http://cl.ly/image/2G0x323u150m/ember.gif)
