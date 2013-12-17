@@ -87,7 +87,8 @@ function build(env, cb) {
   var outFile = (env.outFile || getAssetPath('application.js'));
   var outDir = path.dirname(outFile);
   var command = [
-    'node', __dirname + '/../../node_modules/browserify/bin/cmd',
+    'node',
+    '"'+__dirname + '/../../node_modules/browserify/bin/cmd"',
     '--noparse='+root+'/vendor/ember.js',
     '--noparse='+root+'/vendor/jquery.js',
     '--noparse='+root+'/vendor/ember-data.js',
