@@ -5,10 +5,11 @@ var build = require('../src/commands/build');
 var generate = require('../src/commands/generate');
 var update = require('../src/commands/update');
 var precompile = require('../src/commands/precompile');
+var server = require('../src/commands/server');
 var message = require('../src/util/message');
 
 program
-  .version('0.2.7')
+  .version('0.2.8')
   .usage("[command] [options]\n\n  Command-Specific Help\n\n    ember [command] --help");
 
 program
@@ -65,6 +66,11 @@ program
                  "stable.\n" +
                  "\t\t\t   Default version is stable.\n")
   .action(update);
+
+program
+  .command('server')
+  .description('creates a basic server to serve Ember files')
+  .action(server)
 
 program.parse(process.argv);
 
