@@ -1,7 +1,7 @@
 var walk = require('walk').walk;
 var fs = require('./fs');
 var message = require('../util/message');
-var precompile = require('../../vendor/ember-template-compiler').precompile;
+var precompile = require('ember-template-compiler').precompile;
 
 module.exports = function(source, savePath, callback) {
   callback = callback || function(){};
