@@ -5,6 +5,7 @@ var build = require('../src/commands/build');
 var generate = require('../src/commands/generate');
 var update = require('../src/commands/update');
 var precompile = require('../src/commands/precompile');
+var start = require('../src/commands/start');
 var message = require('../src/util/message');
 
 program
@@ -65,6 +66,11 @@ program
                  "stable.\n" +
                  "\t\t\t   Default version is stable.\n")
   .action(update);
+
+program
+  .command('start')
+  .description("Start simple Node.js server\n")
+  .action(start);
 
 program.parse(process.argv);
 
