@@ -1,8 +1,7 @@
 Ember Tools
 -----------
 
-**NOTICE**: ember-tools has been rewritten, follow development on the
-[loom branch](https://github.com/rpflorence/ember-tools/tree/loom)
+**NOTICE**: ember-tools is not currently maintained. If you want to maintain the project, contact @fivetanley or @rpflorence, if there is any interest. If you're starting a new project, using Ember CLI is recommended instead.
 
 [![Build Status](https://travis-ci.org/rpflorence/ember-tools.png)](https://travis-ci.org/rpflorence/ember-tools)
 
