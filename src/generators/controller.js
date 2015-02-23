@@ -1,3 +1,4 @@
+var config = require('../util/config');
 var fs = require('../util/fs');
 var inflector = require('../util/inflector');
 var msg = require('../util/message');
@@ -6,7 +7,8 @@ module.exports = function(resource) {
   var resourceName = inflector.underscore(resource)+'_controller';
   fs.writeGenerator('controller', resourceName, {
     objectName: inflector.objectify(resourceName),
-    controllerType: promptControllerType()
+    controllerType: config().force?'':promptControllerType(),
+    force: config().force
   });
 };
 

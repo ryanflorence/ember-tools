@@ -39,7 +39,7 @@ fs.writeGenerator = function(generatorType, resourceName, locals) {
   var ext = (generatorType == 'template') ? '.hbs' : '.js';
   var pluralType = inflector.pluralize(generatorType);
   var savePath = config().jsPath+'/'+pluralType+'/'+resourceName+ext;
-  fs.writeTemplate('generate', generatorType+ext, locals, savePath);
+  fs.writeTemplate('generate', generatorType+ext, locals, savePath,locals.force?'force':'');
 };
 
 fs.writeComponentTemplate = function(resourceName, locals) {
@@ -47,7 +47,7 @@ fs.writeComponentTemplate = function(resourceName, locals) {
   var savePath = config().jsPath+'/templates/'+templateName;
   var templatePath = __dirname+'/../templates/generate/component_template.hbs.hbs';
   var src = fs.renderTemplate(templatePath, locals);
-  fs.writeFileSync(savePath, src);
+  fs.writeFileSync(savePath, src, locals.force?'force':'');
 };
 
 fs.renderTemplate = function(templatePath, locals) {
