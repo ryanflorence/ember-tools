@@ -1,4 +1,5 @@
 module.exports = [
+  'mixins',
   'components',
   'config',
   'controllers',
@@ -6,7 +7,6 @@ module.exports = [
   'models',
   'routes',
   'templates',
-  'views',
-  'mixins'
+  'views'
 ];
 
