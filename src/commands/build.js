@@ -86,14 +86,13 @@ function build(env, cb) {
   var root = config().jsPath;
   var outFile = (env.outFile || getAssetPath('application.js'));
   var outDir = path.dirname(outFile);
+  var vndFiles = fs.readdirSync(root+'/vendor').filter(function(p) {return path.extname(p)==='.js';});
   var command = [
     'node', __dirname + '/../../node_modules/browserify/bin/cmd',
-    '--noparse='+root+'/vendor/ember.js',
-    '--noparse='+root+'/vendor/jquery.js',
-    '--noparse='+root+'/vendor/ember-data.js',
+  ].concat(vndFiles.map(function(p) {return '--noparse='+root+'/vendor/'+p;})).concat([
     '--noparse='+root+'/templates.js',
     '-e', root+'/index', '>', outFile
-  ];
+  ]);
   if (!fs.existsSync(outDir)) fs.mkdirpSync(outDir);
   if (env.debug) command.splice(2, 0, '-d');
   exec(command.join(' '), function (error, stdout, stderr) {
